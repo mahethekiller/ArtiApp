@@ -308,20 +308,23 @@ export const apiService = {
     }
   },
 
-  async getProfile(): Promise<typeof mockProfile> {
+  async getProfile(): Promise<any> {
     try {
       const res = await api.get('/profile');
       return mapApiProfileToProfile(res.data.data);
     } catch (e) {
       console.warn('API getProfile failed, falling back to mock data. Error:', e);
       if (CONFIG.FALLBACK_TO_MOCK) {
-        return mockProfile;
+        return {
+          ...mockProfile,
+          isGuest: true,
+        };
       }
       throw e;
     }
   },
 
-  async updateProfile(profileData: { name: string; gotra: string; rashi: string }): Promise<typeof mockProfile> {
+  async updateProfile(profileData: { name: string; gotra: string; rashi: string }): Promise<any> {
     try {
       const res = await api.put('/profile', profileData);
       return mapApiProfileToProfile(res.data.data);
@@ -332,13 +335,16 @@ export const apiService = {
           ...mockProfile,
           ...profileData,
         };
-        return mockProfile;
+        return {
+          ...mockProfile,
+          isGuest: true,
+        };
       }
       throw e;
     }
   },
 
-  async incrementStreak(): Promise<typeof mockProfile> {
+  async incrementStreak(): Promise<any> {
     try {
       const res = await api.post('/profile/streak');
       return mapApiProfileToProfile(res.data.data);
@@ -350,7 +356,10 @@ export const apiService = {
           mockProfile.streakCount += 1;
           mockProfile.lastPrayerDate = today;
         }
-        return mockProfile;
+        return {
+          ...mockProfile,
+          isGuest: true,
+        };
       }
       throw e;
     }
