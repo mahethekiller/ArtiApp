@@ -105,6 +105,36 @@ api.interceptors.request.use(
   }
 );
 
+// Axios Response Interceptor to handle token invalidation/expiry (401)
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    // Check if it is a 401 and the request hasn't been retried yet
+    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      console.log('Stored auth token is invalid or expired. Wiping cache and retrying...');
+      
+      try {
+        // Clear cached credentials
+        await AsyncStorage.removeItem('auth_token');
+        authToken = null;
+        authPromise = null;
+
+        // Force request a new token (login or register guest)
+        const newToken = await ensureAuthenticated();
+        if (newToken) {
+          originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
+          return api(originalRequest);
+        }
+      } catch (authRetryErr) {
+        console.warn('Authentication retry failed:', authRetryErr);
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 // --- MAPPING UTILITIES ---
 
 function mapApiDeityToDeity(apiDeity: any): Deity {
@@ -412,5 +442,30 @@ export const apiService = {
       }
       throw e;
     }
+  },
+
+  async register(profileData: { email: string; password: string; name?: string; gotra?: string; rashi?: string }): Promise<any> {
+    const res = await api.post('/register', profileData);
+    if (res.data && res.data.token) {
+      const token = res.data.token;
+      await AsyncStorage.setItem('auth_token', token);
+      authToken = token;
+    }
+    return mapApiProfileToProfile(res.data.user);
+  },
+
+  async login(credentials: { email: string; password: string }): Promise<any> {
+    const res = await api.post('/login', credentials);
+    if (res.data && res.data.token) {
+      const token = res.data.token;
+      await AsyncStorage.setItem('auth_token', token);
+      authToken = token;
+    }
+    return mapApiProfileToProfile(res.data.user);
+  },
+
+  async logout(): Promise<void> {
+    await AsyncStorage.removeItem('auth_token');
+    authToken = null;
   }
 };
