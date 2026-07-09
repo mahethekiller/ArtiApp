@@ -18,6 +18,8 @@ let mockProfile = {
   lastPrayerDate: new Date().toISOString().split('T')[0],
 };
 
+// --- MAPPING UTILITIES ---
+
 function mapApiDeityToDeity(apiDeity: any): Deity {
   return {
     id: String(apiDeity.id),
@@ -67,6 +69,70 @@ function mapApiAartiToAarti(apiAarti: any): Aarti {
   };
 }
 
+function mapApiWallpaperToWallpaper(apiWp: any): Wallpaper {
+  return {
+    id: String(apiWp.id),
+    deityId: apiWp.deity_id ? String(apiWp.deity_id) : undefined,
+    title: apiWp.title,
+    imageUrl: apiWp.image_url || apiWp.imageUrl,
+  };
+}
+
+function mapApiProfileToProfile(apiUser: any) {
+  return {
+    name: apiUser.name || 'Seeker of Peace',
+    gotra: apiUser.gotra || '',
+    rashi: apiUser.rashi || '',
+    streakCount: apiUser.streak_count || 0,
+    lastPrayerDate: apiUser.last_prayer_date || '',
+  };
+}
+
+function mapApiReminderToReminder(apiRem: any): Reminder {
+  // Convert 24h format '06:00:00' to 12h AM/PM '06:00 AM'
+  let formattedTime = apiRem.time;
+  if (formattedTime && formattedTime.split(':').length >= 2) {
+    const parts = formattedTime.split(':');
+    let hours = parseInt(parts[0], 10);
+    const minutes = parts[1];
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    formattedTime = `${hours.toString().padStart(2, '0')}:${minutes} ${ampm}`;
+  }
+
+  return {
+    id: String(apiRem.id),
+    title: apiRem.title,
+    time: formattedTime,
+    isEnabled: Boolean(apiRem.is_enabled),
+  };
+}
+
+function convertTime12hTo24h(time12h: string): string {
+  // e.g. "06:00 AM" -> "06:00:00"
+  const parts = time12h.trim().split(' ');
+  if (parts.length === 2) {
+    const timeParts = parts[0].split(':');
+    if (timeParts.length === 2) {
+      let hours = parseInt(timeParts[0], 10);
+      const minutes = timeParts[1];
+      const ampm = parts[1].toUpperCase();
+      
+      if (ampm === 'PM' && hours < 12) {
+        hours += 12;
+      }
+      if (ampm === 'AM' && hours === 12) {
+        hours = 0;
+      }
+      return `${hours.toString().padStart(2, '0')}:${minutes}:00`;
+    }
+  }
+  return time12h;
+}
+
+// --- API ACTIONS SERVICE ---
+
 export const apiService = {
   async getDeities(): Promise<Deity[]> {
     try {
@@ -115,8 +181,9 @@ export const apiService = {
   async getGallery(): Promise<Wallpaper[]> {
     try {
       const res = await api.get('/gallery');
-      return res.data.data;
+      return (res.data.data || []).map(mapApiWallpaperToWallpaper);
     } catch (e) {
+      console.warn('API getGallery failed, falling back to mock data. Error:', e);
       if (CONFIG.FALLBACK_TO_MOCK) {
         return [...WALLPAPERS];
       }
@@ -127,8 +194,9 @@ export const apiService = {
   async getProfile(): Promise<typeof mockProfile> {
     try {
       const res = await api.get('/profile');
-      return res.data.data;
+      return mapApiProfileToProfile(res.data.data);
     } catch (e) {
+      console.warn('API getProfile failed, falling back to mock data. Error:', e);
       if (CONFIG.FALLBACK_TO_MOCK) {
         return mockProfile;
       }
@@ -139,8 +207,9 @@ export const apiService = {
   async updateProfile(profileData: { name: string; gotra: string; rashi: string }): Promise<typeof mockProfile> {
     try {
       const res = await api.put('/profile', profileData);
-      return res.data.data;
+      return mapApiProfileToProfile(res.data.data);
     } catch (e) {
+      console.warn('API updateProfile failed, falling back to mock data. Error:', e);
       if (CONFIG.FALLBACK_TO_MOCK) {
         mockProfile = {
           ...mockProfile,
@@ -155,8 +224,9 @@ export const apiService = {
   async incrementStreak(): Promise<typeof mockProfile> {
     try {
       const res = await api.post('/profile/streak');
-      return res.data.data;
+      return mapApiProfileToProfile(res.data.data);
     } catch (e) {
+      console.warn('API incrementStreak failed, falling back to mock data. Error:', e);
       if (CONFIG.FALLBACK_TO_MOCK) {
         const today = new Date().toISOString().split('T')[0];
         if (mockProfile.lastPrayerDate !== today) {
@@ -172,8 +242,9 @@ export const apiService = {
   async getFavorites(): Promise<string[]> {
     try {
       const res = await api.get('/favorites');
-      return res.data.data;
+      return (res.data.data || []).map((fav: any) => String(fav.aarti_id));
     } catch (e) {
+      console.warn('API getFavorites failed, falling back to mock data. Error:', e);
       if (CONFIG.FALLBACK_TO_MOCK) {
         return mockFavorites;
       }
@@ -186,6 +257,7 @@ export const apiService = {
       const res = await api.post('/favorites/toggle', { aarti_id: aartiId });
       return res.data.is_favorite;
     } catch (e) {
+      console.warn('API toggleFavorite failed, falling back to mock data. Error:', e);
       if (CONFIG.FALLBACK_TO_MOCK) {
         const isFav = mockFavorites.includes(aartiId);
         if (isFav) {
@@ -203,8 +275,9 @@ export const apiService = {
   async getReminders(): Promise<Reminder[]> {
     try {
       const res = await api.get('/reminders');
-      return res.data.data;
+      return (res.data.data || []).map(mapApiReminderToReminder);
     } catch (e) {
+      console.warn('API getReminders failed, falling back to mock data. Error:', e);
       if (CONFIG.FALLBACK_TO_MOCK) {
         return mockReminders;
       }
@@ -215,8 +288,9 @@ export const apiService = {
   async toggleReminder(id: string, isEnabled: boolean): Promise<Reminder> {
     try {
       const res = await api.put(`/reminders/${id}`, { is_enabled: isEnabled });
-      return res.data.data;
+      return mapApiReminderToReminder(res.data.data);
     } catch (e) {
+      console.warn(`API toggleReminder for ID ${id} failed, falling back to mock data. Error:`, e);
       if (CONFIG.FALLBACK_TO_MOCK) {
         const remIndex = mockReminders.findIndex(r => r.id === id);
         if (remIndex > -1) {
@@ -234,9 +308,11 @@ export const apiService = {
 
   async addReminder(title: string, time: string): Promise<Reminder> {
     try {
-      const res = await api.post('/reminders', { title, time });
-      return res.data.data;
+      const apiTime = convertTime12hTo24h(time);
+      const res = await api.post('/reminders', { title, time: apiTime });
+      return mapApiReminderToReminder(res.data.data);
     } catch (e) {
+      console.warn('API addReminder failed, falling back to mock data. Error:', e);
       if (CONFIG.FALLBACK_TO_MOCK) {
         const newRem: Reminder = {
           id: `rem_${Date.now()}`,
