@@ -9,5 +9,5 @@ export const CONFIG = {
     default: 'http://192.168.1.5:8000/api/arti',
   }),
   // When enabled, the app will use mock data when the Laravel backend is unreachable
-  FALLBACK_TO_MOCK: true,
+  FALLBACK_TO_MOCK: false,
 };
