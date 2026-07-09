@@ -91,8 +91,14 @@ export const useAudioPlayer = () => {
       lyricsIndex = 0;
       notifyListeners();
 
+      // Rewrite URL if it points to a non-existent example.com placeholder or a renegotiating soundhelix.com URL to avoid OpenSSL handshake failures
+      let playUrl = aarti.audioUrl;
+      if (playUrl.includes('example.com') || playUrl.includes('soundhelix.com')) {
+        playUrl = 'https://raw.githubusercontent.com/rafaelreis-hotmart/Audio-Sample-files/master/sample.mp3';
+      }
+
       const { sound } = await Audio.Sound.createAsync(
-        { uri: aarti.audioUrl },
+        { uri: playUrl },
         { 
           shouldPlay, 
           rate: playbackSpeed, 
