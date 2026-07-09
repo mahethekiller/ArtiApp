@@ -20,7 +20,9 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
     updateProfile,
     toggleReminder,
     addReminder,
-    completeDailyPrayer
+    login,
+    register,
+    logout
   } = useProfile();
 
   const { savedWallpapers } = useGallery();
@@ -35,6 +37,15 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
   const [reminderModalVisible, setReminderModalVisible] = useState(false);
   const [newReminderTitle, setNewReminderTitle] = useState('');
   const [newReminderTime, setNewReminderTime] = useState('07:00 AM');
+
+  // Authentication (login/register) modal state
+  const [authModalVisible, setAuthModalVisible] = useState(false);
+  const [authIsRegistering, setAuthIsRegistering] = useState(false);
+  const [authEmail, setAuthEmail] = useState('');
+  const [authPassword, setAuthPassword] = useState('');
+  const [authName, setAuthName] = useState('');
+  const [authGotra, setAuthGotra] = useState('');
+  const [authRashi, setAuthRashi] = useState('');
 
   // Load details into inputs when editing starts
   const startEditing = () => {
@@ -71,6 +82,49 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
     }
   };
 
+  const handleAuthSubmit = async () => {
+    if (!authEmail.trim() || !authPassword.trim()) {
+      Alert.alert('Error', 'Email and password are required fields.');
+      return;
+    }
+    if (authPassword.length < 8) {
+      Alert.alert('Error', 'Password must be at least 8 characters.');
+      return;
+    }
+
+    try {
+      if (authIsRegistering) {
+        await register({
+          email: authEmail,
+          password: authPassword,
+          name: authName.trim() ? authName.trim() : undefined,
+          gotra: authGotra.trim() ? authGotra.trim() : undefined,
+          rashi: authRashi.trim() ? authRashi.trim() : undefined,
+        });
+        Alert.alert('Success', 'Spiritual account created successfully!');
+      } else {
+        await login({
+          email: authEmail,
+          password: authPassword,
+        });
+        Alert.alert('Success', 'Welcome back! Logged in successfully.');
+      }
+      setAuthModalVisible(false);
+      resetAuthForm();
+    } catch (e: any) {
+      const errMsg = e.response?.data?.message || e.message || 'Authentication failed.';
+      Alert.alert('Authentication Failed', errMsg);
+    }
+  };
+
+  const resetAuthForm = () => {
+    setAuthEmail('');
+    setAuthPassword('');
+    setAuthName('');
+    setAuthGotra('');
+    setAuthRashi('');
+  };
+
   const playFavoriteAarti = (aarti: Aarti) => {
     navigation.navigate('AartiPlayer', { aartiId: aarti.id });
   };
@@ -90,7 +144,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
             />
             <View style={styles.badge}>
               <AppText variant="labelSm" color={theme.colors.onSecondaryContainer} style={styles.badgeText}>
-                Seeker
+                {profile?.isGuest ? 'Guest' : 'Seeker'}
               </AppText>
             </View>
           </View>
@@ -126,11 +180,17 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
           ) : (
             <View style={styles.profileMeta}>
               <AppText variant="headlineMd" style={styles.profileName}>
-                {profile?.name || 'Jay Shreeram'}
+                {profile?.name || 'Seeker of Peace'}
               </AppText>
-              <AppText variant="labelSm" color={theme.colors.primary} style={styles.journeyText}>
-                Spiritual Journey • Streak: {profile?.streakCount || 0} Days 🔥
-              </AppText>
+              {profile?.isGuest ? (
+                <AppText variant="labelSm" color={theme.colors.outline} style={styles.journeyText}>
+                  Browsing as Guest Profile
+                </AppText>
+              ) : (
+                <AppText variant="labelSm" color={theme.colors.primary} style={styles.journeyText}>
+                  Spiritual Journey • Streak: {profile?.streakCount || 0} Days 🔥
+                </AppText>
+              )}
 
               {profile?.gotra || profile?.rashi ? (
                 <View style={styles.spiritualDetailsRow}>
@@ -160,6 +220,41 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
             </View>
           )}
         </View>
+
+        {/* Guest Account Info Banner */}
+        {profile?.isGuest ? (
+          <View style={styles.guestBanner}>
+            <View style={styles.guestBannerHeader}>
+              <Ionicons name="information-circle-outline" size={24} color={theme.colors.tertiary} />
+              <AppText variant="bodyLg" style={styles.guestBannerTitle}>
+                Save Your Spiritual Progress
+              </AppText>
+            </View>
+            <AppText variant="bodyMd" color={theme.colors.onSurfaceVariant} style={styles.guestBannerText}>
+              Create a permanent account or log in to sync your prayer streaks, reminders, and favorite Aartis across devices.
+            </AppText>
+            <View style={styles.guestActions}>
+              <AppButton
+                title="Log In"
+                variant="outline"
+                style={styles.guestBtn}
+                onPress={() => {
+                  setAuthIsRegistering(false);
+                  setAuthModalVisible(true);
+                }}
+              />
+              <AppButton
+                title="Create Account"
+                variant="primary"
+                style={styles.guestBtn}
+                onPress={() => {
+                  setAuthIsRegistering(true);
+                  setAuthModalVisible(true);
+                }}
+              />
+            </View>
+          </View>
+        ) : null}
 
         {/* Favorite Aartis list */}
         <View style={styles.sectionHeader}>
@@ -262,7 +357,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 
         {/* Action Options */}
         <View style={styles.actionsBox}>
-          <Pressable style={styles.actionRow} onPress={() => Alert.alert('Prayer History', 'History database connected offline.')}>
+          <Pressable style={styles.actionRow} onPress={() => Alert.alert('Prayer History', 'History database connected successfully.')}>
             <View style={styles.actionLeft}>
               <Ionicons name="time-outline" size={20} color={theme.colors.primary} />
               <AppText variant="bodyMd" style={styles.actionLabel}>Prayer History</AppText>
@@ -278,15 +373,122 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
             <Ionicons name="chevron-forward" size={18} color={theme.colors.outline} />
           </Pressable>
 
-          <Pressable style={styles.actionRow} onPress={() => Alert.alert('Sign Out', 'Signed out successfully.')}>
+          <Pressable
+            style={styles.actionRow}
+            onPress={async () => {
+              await logout();
+              Alert.alert('Logged Out', 'You are now browsing with a guest profile.');
+            }}
+          >
             <View style={styles.actionLeft}>
               <Ionicons name="log-out-outline" size={20} color={theme.colors.tertiary} />
-              <AppText variant="bodyMd" style={styles.actionLabel} color={theme.colors.tertiary}>Sign Out</AppText>
+              <AppText variant="bodyMd" style={styles.actionLabel} color={theme.colors.tertiary}>
+                {profile?.isGuest ? 'Reset Guest Cache' : 'Log Out'}
+              </AppText>
             </View>
             <Ionicons name="chevron-forward" size={18} color={theme.colors.outline} />
           </Pressable>
         </View>
       </ScrollView>
+
+      {/* Auth Register/Login Modal */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={authModalVisible}
+        onRequestClose={() => {
+          setAuthModalVisible(false);
+          resetAuthForm();
+        }}
+      >
+        <View style={styles.modalOverlay}>
+          <ScrollView contentContainerStyle={styles.scrollModalContainer} style={{ width: '100%' }}>
+            <View style={styles.modalContent}>
+              <AppText variant="headlineMd" style={styles.modalTitle}>
+                {authIsRegistering ? 'Create Devotional Account' : 'Welcome Back'}
+              </AppText>
+
+              {authIsRegistering ? (
+                <TextInput
+                  placeholder="Full Name"
+                  placeholderTextColor={theme.colors.outline}
+                  value={authName}
+                  onChangeText={setAuthName}
+                  style={styles.modalInput}
+                />
+              ) : null}
+
+              <TextInput
+                placeholder="Email Address"
+                placeholderTextColor={theme.colors.outline}
+                value={authEmail}
+                onChangeText={setAuthEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                style={styles.modalInput}
+              />
+
+              <TextInput
+                placeholder="Password (Min 8 chars)"
+                placeholderTextColor={theme.colors.outline}
+                value={authPassword}
+                onChangeText={setAuthPassword}
+                secureTextEntry={true}
+                autoCapitalize="none"
+                style={styles.modalInput}
+              />
+
+              {authIsRegistering ? (
+                <>
+                  <TextInput
+                    placeholder="Gotra (Optional)"
+                    placeholderTextColor={theme.colors.outline}
+                    value={authGotra}
+                    onChangeText={setAuthGotra}
+                    style={styles.modalInput}
+                  />
+                  <TextInput
+                    placeholder="Rashi (Optional)"
+                    placeholderTextColor={theme.colors.outline}
+                    value={authRashi}
+                    onChangeText={setAuthRashi}
+                    style={styles.modalInput}
+                  />
+                </>
+              ) : null}
+
+              <View style={styles.modalActions}>
+                <AppButton
+                  title="Cancel"
+                  variant="outline"
+                  style={styles.modalBtn}
+                  onPress={() => {
+                    setAuthModalVisible(false);
+                    resetAuthForm();
+                  }}
+                />
+                <AppButton
+                  title={authIsRegistering ? 'Sign Up' : 'Log In'}
+                  variant="primary"
+                  style={styles.modalBtn}
+                  onPress={handleAuthSubmit}
+                />
+              </View>
+
+              <Pressable
+                onPress={() => setAuthIsRegistering(prev => !prev)}
+                style={styles.toggleAuthModeBtn}
+              >
+                <AppText variant="bodyMd" color={theme.colors.primary} style={styles.toggleAuthModeText}>
+                  {authIsRegistering
+                    ? 'Already have an account? Log In'
+                    : "Don't have an account? Sign Up"}
+                </AppText>
+              </Pressable>
+            </View>
+          </ScrollView>
+        </View>
+      </Modal>
 
       {/* Add Reminder Modal popup */}
       <Modal
@@ -369,7 +571,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -4,
     right: -4,
-    backgroundColor: theme.colors.secondaryContainer, // Gold
+    backgroundColor: theme.colors.secondaryContainer,
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: theme.borderRadius.full,
@@ -469,7 +671,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   gridImage: {
-    width: (Dimensions.get('window').width - 48 - 16) / 3, // 3 Columns
+    width: (Dimensions.get('window').width - 48 - 16) / 3,
     height: 120,
     borderRadius: theme.borderRadius.default,
     backgroundColor: theme.colors.surfaceDim,
@@ -547,6 +749,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: theme.spacing.gutter,
   },
+  scrollModalContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
   modalContent: {
     width: '100%',
     backgroundColor: theme.colors.background,
@@ -577,5 +785,44 @@ const styles = StyleSheet.create({
   },
   modalBtn: {
     flex: 1,
+  },
+  guestBanner: {
+    backgroundColor: theme.colors.tertiaryContainer,
+    borderRadius: theme.borderRadius.lg,
+    padding: theme.spacing.gutter,
+    marginBottom: theme.spacing.gutter,
+    borderWidth: 1,
+    borderColor: theme.colors.tertiary,
+  },
+  guestBannerHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 6,
+  },
+  guestBannerTitle: {
+    fontWeight: theme.typography.weights.bold,
+    color: theme.colors.onTertiaryContainer,
+  },
+  guestBannerText: {
+    fontSize: 13,
+    lineHeight: 18,
+    marginBottom: 12,
+  },
+  guestActions: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  guestBtn: {
+    flex: 1,
+    height: 38,
+  },
+  toggleAuthModeBtn: {
+    marginTop: 8,
+    alignItems: 'center',
+  },
+  toggleAuthModeText: {
+    fontSize: 13,
+    fontWeight: theme.typography.weights.semibold,
   },
 });
