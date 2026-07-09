@@ -60,7 +60,10 @@ export const PlayerScreen: React.FC<PlayerScreenProps> = ({ navigation, route })
       }
 
       // Load aarti but do not auto-play if we are starting in video mode
-      loadAarti(selectedAarti, !isVideo);
+      // Only call loadAarti if this is a different song to avoid interrupting/restarting active music
+      if (currentAarti?.id !== selectedAarti.id) {
+        loadAarti(selectedAarti, !isVideo);
+      }
     } else {
       Alert.alert('Error', 'Aarti not found');
       navigation.goBack();
@@ -163,8 +166,6 @@ export const PlayerScreen: React.FC<PlayerScreenProps> = ({ navigation, route })
       <View style={styles.header}>
         <Pressable 
           onPress={() => {
-            // Unload audio player when closing to prevent concurrent playing issues
-            pauseAudio();
             navigation.goBack();
           }} 
           style={styles.closeBtn}
