@@ -196,12 +196,15 @@ function mapApiWallpaperToWallpaper(apiWp: any): Wallpaper {
 }
 
 function mapApiProfileToProfile(apiUser: any) {
+  const email = apiUser.email || '';
   return {
     name: apiUser.name || 'Seeker of Peace',
+    email: email,
     gotra: apiUser.gotra || '',
     rashi: apiUser.rashi || '',
     streakCount: apiUser.streak_count || 0,
     lastPrayerDate: apiUser.last_prayer_date || '',
+    isGuest: email.toLowerCase() === 'guest_user@artiapp.com',
   };
 }
 
