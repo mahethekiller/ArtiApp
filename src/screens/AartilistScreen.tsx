@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, TextInput, Pressable, Image, ActivityIndicator, Platform } from 'react-native';
+import { View, StyleSheet, FlatList, TextInput, Pressable, Image, ActivityIndicator, Platform, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme } from '../theme';
 import { AppText } from '../components/atoms/Text';
@@ -188,6 +188,20 @@ export const AartilistScreen: React.FC<AartilistScreenProps> = ({ navigation, ro
           }
         />
       )}
+
+      {/* Full Screen Loader Overlay */}
+      {loading ? (
+        <Modal transparent={true} animationType="fade" visible={loading}>
+          <View style={styles.fullScreenLoaderBg}>
+            <View style={styles.fullScreenLoaderContent}>
+              <ActivityIndicator size="large" color={theme.colors.primary} />
+              <AppText variant="bodyMd" style={styles.fullScreenLoaderText}>
+                Connecting to Divine Server...
+              </AppText>
+            </View>
+          </View>
+        </Modal>
+      ) : null}
     </SafeAreaView>
   );
 };
@@ -320,5 +334,25 @@ const styles = StyleSheet.create({
   emptyContainer: {
     paddingVertical: 40,
     alignItems: 'center',
+  },
+  fullScreenLoaderBg: {
+    flex: 1,
+    backgroundColor: 'rgba(27, 28, 23, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  fullScreenLoaderContent: {
+    backgroundColor: theme.colors.background,
+    padding: 24,
+    borderRadius: theme.borderRadius.lg,
+    alignItems: 'center',
+    gap: 12,
+    borderWidth: 1,
+    borderColor: theme.colors.surfaceContainer,
+    elevation: 5,
+  },
+  fullScreenLoaderText: {
+    fontWeight: theme.typography.weights.semibold,
+    color: theme.colors.primary,
   },
 });

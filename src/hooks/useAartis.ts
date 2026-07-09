@@ -31,6 +31,7 @@ export const useAartis = (category?: string) => {
   }, [category]);
 
   const toggleFavorite = async (aartiId: string) => {
+    setLoading(true);
     try {
       const isFavNow = await apiService.toggleFavorite(aartiId);
       if (isFavNow) {
@@ -42,6 +43,8 @@ export const useAartis = (category?: string) => {
     } catch (e) {
       console.error('Failed to toggle favorite:', e);
       return favorites.includes(aartiId);
+    } finally {
+      setLoading(false);
     }
   };
 

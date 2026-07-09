@@ -47,6 +47,7 @@ export const useProfile = () => {
   }, []);
 
   const updateProfile = async (name: string, gotra: string, rashi: string) => {
+    setLoading(true);
     try {
       const updated = await apiService.updateProfile({ name, gotra, rashi });
       setProfile(updated);
@@ -54,10 +55,13 @@ export const useProfile = () => {
     } catch (e) {
       console.error('Failed to update profile:', e);
       return false;
+    } finally {
+      setLoading(false);
     }
   };
 
   const completeDailyPrayer = async () => {
+    setLoading(true);
     try {
       const updated = await apiService.incrementStreak();
       setProfile(updated);
@@ -65,10 +69,13 @@ export const useProfile = () => {
     } catch (e) {
       console.error('Failed to increment streak:', e);
       return false;
+    } finally {
+      setLoading(false);
     }
   };
 
   const toggleReminder = async (id: string, isEnabled: boolean) => {
+    setLoading(true);
     try {
       const updated = await apiService.toggleReminder(id, isEnabled);
       setReminders(prev => prev.map(r => r.id === id ? updated : r));
@@ -76,10 +83,13 @@ export const useProfile = () => {
     } catch (e) {
       console.error('Failed to toggle reminder:', e);
       return false;
+    } finally {
+      setLoading(false);
     }
   };
 
   const addReminder = async (title: string, time: string) => {
+    setLoading(true);
     try {
       const newRem = await apiService.addReminder(title, time);
       setReminders(prev => [...prev, newRem]);
@@ -87,6 +97,8 @@ export const useProfile = () => {
     } catch (e) {
       console.error('Failed to add reminder:', e);
       return false;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -125,6 +137,8 @@ export const useProfile = () => {
       setLoading(true);
       await apiService.logout();
       setProfile(null);
+      setReminders([]);
+      setFavoriteAartis([]);
       await fetchProfileAndReminders();
       return true;
     } catch (e) {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Image, Pressable, Dimensions } from 'react-native';
+import { View, StyleSheet, ScrollView, Image, Pressable, Dimensions, ActivityIndicator, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme } from '../theme';
 import { AppText } from '../components/atoms/Text';
@@ -14,14 +14,17 @@ export interface HomeScreenProps {
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [deities, setDeities] = useState<readonly Deity[]>(DEITIES);
+  const [loading, setLoading] = useState(false);
   const { currentAarti, isPlaying, togglePlay } = useAudioPlayer();
 
   useEffect(() => {
+    setLoading(true);
     apiService.getDeities()
       .then(data => {
         setDeities(data);
       })
-      .catch(err => console.log('Error loading home deities:', err));
+      .catch(err => console.log('Error loading home deities:', err))
+      .finally(() => setLoading(false));
   }, []);
 
   const handleDeityPress = (deityId: string) => {
@@ -127,6 +130,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       >
         <Ionicons name={isPlaying ? "pause" : "play"} size={28} color="#ffffff" />
       </Pressable>
+
+      {/* Full Screen Loader Overlay */}
+      {loading ? (
+        <Modal transparent={true} animationType="fade" visible={loading}>
+          <View style={styles.fullScreenLoaderBg}>
+            <View style={styles.fullScreenLoaderContent}>
+              <ActivityIndicator size="large" color={theme.colors.primary} />
+              <AppText variant="bodyMd" style={styles.fullScreenLoaderText}>
+                Connecting to Divine Server...
+              </AppText>
+            </View>
+          </View>
+        </Modal>
+      ) : null}
     </SafeAreaView>
   );
 };
@@ -270,5 +287,25 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 6,
+  },
+  fullScreenLoaderBg: {
+    flex: 1,
+    backgroundColor: 'rgba(27, 28, 23, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  fullScreenLoaderContent: {
+    backgroundColor: theme.colors.background,
+    padding: 24,
+    borderRadius: theme.borderRadius.lg,
+    alignItems: 'center',
+    gap: 12,
+    borderWidth: 1,
+    borderColor: theme.colors.surfaceContainer,
+    elevation: 5,
+  },
+  fullScreenLoaderText: {
+    fontWeight: theme.typography.weights.semibold,
+    color: theme.colors.primary,
   },
 });

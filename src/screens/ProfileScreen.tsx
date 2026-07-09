@@ -19,6 +19,8 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
     profile,
     reminders,
     favoriteAartis,
+    loading,
+    error,
     updateProfile,
     toggleReminder,
     addReminder,
@@ -576,6 +578,20 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
           </View>
         </View>
       </Modal>
+
+      {/* Full Screen Loader Overlay */}
+      {loading ? (
+        <Modal transparent={true} animationType="fade" visible={loading}>
+          <View style={styles.fullScreenLoaderBg}>
+            <View style={styles.fullScreenLoaderContent}>
+              <ActivityIndicator size="large" color={theme.colors.primary} />
+              <AppText variant="bodyMd" style={styles.fullScreenLoaderText}>
+                Connecting to Divine Server...
+              </AppText>
+            </View>
+          </View>
+        </Modal>
+      ) : null}
     </SafeAreaView>
   );
 };
@@ -875,5 +891,25 @@ const styles = StyleSheet.create({
   toggleAuthModeText: {
     fontSize: 13,
     fontWeight: theme.typography.weights.semibold,
+  },
+  fullScreenLoaderBg: {
+    flex: 1,
+    backgroundColor: 'rgba(27, 28, 23, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  fullScreenLoaderContent: {
+    backgroundColor: theme.colors.background,
+    padding: 24,
+    borderRadius: theme.borderRadius.lg,
+    alignItems: 'center',
+    gap: 12,
+    borderWidth: 1,
+    borderColor: theme.colors.surfaceContainer,
+    elevation: 5,
+  },
+  fullScreenLoaderText: {
+    fontWeight: theme.typography.weights.semibold,
+    color: theme.colors.primary,
   },
 });
