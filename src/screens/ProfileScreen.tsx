@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Image, Pressable, Switch, TextInput, Alert, Dimensions, Modal } from 'react-native';
+import { View, StyleSheet, ScrollView, Image, Pressable, Switch, TextInput, Alert, Dimensions, Modal, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme } from '../theme';
 import { AppText } from '../components/atoms/Text';
 import { AppButton } from '../components/atoms/Button';
 import { useProfile } from '../hooks/useProfile';
 import { useGallery } from '../hooks/useGallery';
-import { AARTIS, Aarti } from '../data/mockData';
+import { useAudioPlayer } from '../hooks/useAudioPlayer';
+import { Aarti } from '../data/mockData';
 import { Ionicons } from '@expo/vector-icons';
 
 export interface ProfileScreenProps {
@@ -17,6 +18,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
   const {
     profile,
     reminders,
+    favoriteAartis,
     updateProfile,
     toggleReminder,
     addReminder,
@@ -26,6 +28,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
   } = useProfile();
 
   const { savedWallpapers } = useGallery();
+  const { currentAarti, isPlaying, togglePlay, loadAarti } = useAudioPlayer();
 
   // Editing profile details form state
   const [isEditing, setIsEditing] = useState(false);
@@ -46,6 +49,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
   const [authName, setAuthName] = useState('');
   const [authGotra, setAuthGotra] = useState('');
   const [authRashi, setAuthRashi] = useState('');
+  const [authLoading, setAuthLoading] = useState(false);
 
   // Load details into inputs when editing starts
   const startEditing = () => {
@@ -92,6 +96,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
       return;
     }
 
+    setAuthLoading(true);
     try {
       if (authIsRegistering) {
         await register({
@@ -114,6 +119,8 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
     } catch (e: any) {
       const errMsg = e.response?.data?.message || e.message || 'Authentication failed.';
       Alert.alert('Authentication Failed', errMsg);
+    } finally {
+      setAuthLoading(false);
     }
   };
 
@@ -125,12 +132,17 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
     setAuthRashi('');
   };
 
+  const handlePlayPauseAarti = async (aarti: Aarti) => {
+    if (currentAarti?.id === aarti.id) {
+      await togglePlay();
+    } else {
+      await loadAarti(aarti, true);
+    }
+  };
+
   const playFavoriteAarti = (aarti: Aarti) => {
     navigation.navigate('AartiPlayer', { aartiId: aarti.id });
   };
-
-  // Find favorite aarti details
-  const favoriteAartis = AARTIS.filter(a => a.id === 'aarti_ganesha' || a.id === 'aarti_shiva');
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['bottom']}>
@@ -269,24 +281,35 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
         </View>
 
         <View style={styles.favoritesContainer}>
-          {favoriteAartis.map((aarti) => (
-            <Pressable
-              key={aarti.id}
-              onPress={() => playFavoriteAarti(aarti)}
-              style={styles.favAartiRow}
-            >
-              <Ionicons name="heart" size={20} color={theme.colors.tertiary} />
-              <View style={styles.favAartiMeta}>
-                <AppText variant="bodyMd" style={styles.favAartiTitle}>
-                  {aarti.title}
-                </AppText>
-                <AppText variant="labelSm" color={theme.colors.onSurfaceVariant}>
-                  {aarti.subtitle}
-                </AppText>
-              </View>
-              <Ionicons name="play-circle-outline" size={24} color={theme.colors.primary} />
-            </Pressable>
-          ))}
+          {favoriteAartis.length === 0 ? (
+            <AppText variant="bodyMd" color={theme.colors.outline} style={styles.emptyText}>
+              No favorites added yet. Explore the Aarti list!
+            </AppText>
+          ) : (
+            favoriteAartis.map((aarti) => {
+              const isThisPlaying = currentAarti?.id === aarti.id && isPlaying;
+              return (
+                <View key={aarti.id} style={styles.favAartiRow}>
+                  <Ionicons name="heart" size={20} color={theme.colors.tertiary} />
+                  <Pressable onPress={() => playFavoriteAarti(aarti)} style={styles.favAartiMeta}>
+                    <AppText variant="bodyMd" style={styles.favAartiTitle}>
+                      {aarti.title}
+                    </AppText>
+                    <AppText variant="labelSm" color={theme.colors.onSurfaceVariant}>
+                      {aarti.subtitle}
+                    </AppText>
+                  </Pressable>
+                  <Pressable onPress={() => handlePlayPauseAarti(aarti)} style={styles.playPauseBtn}>
+                    <Ionicons
+                      name={isThisPlaying ? "pause-circle" : "play-circle-outline"}
+                      size={28}
+                      color={theme.colors.primary}
+                    />
+                  </Pressable>
+                </View>
+              );
+            })
+          )}
         </View>
 
         {/* Saved Wallpapers Grid */}
@@ -397,8 +420,10 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
         transparent={true}
         visible={authModalVisible}
         onRequestClose={() => {
-          setAuthModalVisible(false);
-          resetAuthForm();
+          if (!authLoading) {
+            setAuthModalVisible(false);
+            resetAuthForm();
+          }
         }}
       >
         <View style={styles.modalOverlay}>
@@ -414,6 +439,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
                   placeholderTextColor={theme.colors.outline}
                   value={authName}
                   onChangeText={setAuthName}
+                  editable={!authLoading}
                   style={styles.modalInput}
                 />
               ) : null}
@@ -425,6 +451,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
                 onChangeText={setAuthEmail}
                 keyboardType="email-address"
                 autoCapitalize="none"
+                editable={!authLoading}
                 style={styles.modalInput}
               />
 
@@ -435,6 +462,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
                 onChangeText={setAuthPassword}
                 secureTextEntry={true}
                 autoCapitalize="none"
+                editable={!authLoading}
                 style={styles.modalInput}
               />
 
@@ -445,6 +473,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
                     placeholderTextColor={theme.colors.outline}
                     value={authGotra}
                     onChangeText={setAuthGotra}
+                    editable={!authLoading}
                     style={styles.modalInput}
                   />
                   <TextInput
@@ -452,6 +481,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
                     placeholderTextColor={theme.colors.outline}
                     value={authRashi}
                     onChangeText={setAuthRashi}
+                    editable={!authLoading}
                     style={styles.modalInput}
                   />
                 </>
@@ -462,21 +492,33 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
                   title="Cancel"
                   variant="outline"
                   style={styles.modalBtn}
+                  disabled={authLoading}
                   onPress={() => {
                     setAuthModalVisible(false);
                     resetAuthForm();
                   }}
                 />
-                <AppButton
-                  title={authIsRegistering ? 'Sign Up' : 'Log In'}
-                  variant="primary"
-                  style={styles.modalBtn}
-                  onPress={handleAuthSubmit}
-                />
+                {authLoading ? (
+                  <View style={styles.modalLoaderContainer}>
+                    <ActivityIndicator size="small" color={theme.colors.primary} />
+                  </View>
+                ) : (
+                  <AppButton
+                    title={authIsRegistering ? 'Sign Up' : 'Log In'}
+                    variant="primary"
+                    style={styles.modalBtn}
+                    onPress={handleAuthSubmit}
+                  />
+                )}
               </View>
 
               <Pressable
-                onPress={() => setAuthIsRegistering(prev => !prev)}
+                onPress={() => {
+                  if (!authLoading) {
+                    setAuthIsRegistering(prev => !prev);
+                  }
+                }}
+                disabled={authLoading}
                 style={styles.toggleAuthModeBtn}
               >
                 <AppText variant="bodyMd" color={theme.colors.primary} style={styles.toggleAuthModeText}>
@@ -665,6 +707,9 @@ const styles = StyleSheet.create({
   favAartiTitle: {
     fontWeight: theme.typography.weights.semibold,
   },
+  playPauseBtn: {
+    padding: 4,
+  },
   wallpaperGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -785,6 +830,12 @@ const styles = StyleSheet.create({
   },
   modalBtn: {
     flex: 1,
+  },
+  modalLoaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
   },
   guestBanner: {
     backgroundColor: theme.colors.tertiaryContainer,

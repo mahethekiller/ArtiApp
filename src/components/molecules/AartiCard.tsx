@@ -4,6 +4,7 @@ import { theme } from '../../theme';
 import { Aarti, DEITIES } from '../../data/mockData';
 import { AppText } from '../atoms/Text';
 import { AppButton } from '../atoms/Button';
+import { useAudioPlayer } from '../../hooks/useAudioPlayer';
 import { Ionicons } from '@expo/vector-icons';
 
 export interface AartiCardProps {
@@ -21,13 +22,25 @@ export const AartiCard: React.FC<AartiCardProps> = ({
   onPlayVideo,
   onToggleFavorite,
 }) => {
+  const { currentAarti, isPlaying, togglePlay, loadAarti } = useAudioPlayer();
+
   // Find deity image
   const deity = DEITIES.find(d => d.id === aarti.deityId);
   const imageUri = deity?.image || 'https://images.unsplash.com/photo-1566378246598-5b11a0d486cc?w=400';
 
+  const isThisPlaying = currentAarti?.id === aarti.id && isPlaying;
+
+  const handleListenPress = async () => {
+    if (currentAarti?.id === aarti.id) {
+      await togglePlay();
+    } else {
+      await loadAarti(aarti, true);
+    }
+  };
+
   return (
     <View style={styles.card}>
-      <View style={styles.header}>
+      <Pressable onPress={() => onPlayAudio(aarti)} style={styles.header}>
         <Image source={{ uri: imageUri }} style={styles.avatar} />
         
         <View style={styles.details}>
@@ -54,15 +67,21 @@ export const AartiCard: React.FC<AartiCardProps> = ({
             color={isFavorite ? theme.colors.tertiary : theme.colors.outline}
           />
         </Pressable>
-      </View>
+      </Pressable>
 
       <View style={styles.actions}>
         <AppButton
-          title="Listen Audio"
-          variant="outline"
+          title={isThisPlaying ? "Pause Audio" : "Listen Audio"}
+          variant={isThisPlaying ? "primary" : "outline"}
           style={styles.actionBtn}
-          icon={<Ionicons name="play-circle-outline" size={20} color={theme.colors.primary} />}
-          onPress={() => onPlayAudio(aarti)}
+          icon={
+            <Ionicons
+              name={isThisPlaying ? "pause-circle" : "play-circle-outline"}
+              size={20}
+              color={isThisPlaying ? "#ffffff" : theme.colors.primary}
+            />
+          }
+          onPress={handleListenPress}
         />
         <AppButton
           title="Watch Video"

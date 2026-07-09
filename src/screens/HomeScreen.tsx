@@ -5,6 +5,7 @@ import { theme } from '../theme';
 import { AppText } from '../components/atoms/Text';
 import { DEITIES, AARTIS, Deity } from '../data/mockData';
 import { apiService } from '../services/api';
+import { useAudioPlayer } from '../hooks/useAudioPlayer';
 import { Ionicons } from '@expo/vector-icons';
 
 export interface HomeScreenProps {
@@ -13,6 +14,7 @@ export interface HomeScreenProps {
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [deities, setDeities] = useState<readonly Deity[]>(DEITIES);
+  const { currentAarti, isPlaying, togglePlay } = useAudioPlayer();
 
   useEffect(() => {
     apiService.getDeities()
@@ -32,6 +34,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     const ganeshaAarti = AARTIS.find(a => a.id === 'aarti_ganesha');
     if (ganeshaAarti) {
       navigation.navigate('AartiPlayer', { aartiId: ganeshaAarti.id });
+    }
+  };
+
+  const handleFloatingPlayPress = async () => {
+    if (currentAarti) {
+      await togglePlay();
+    } else {
+      handleLiveAartiPress();
     }
   };
 
@@ -111,11 +121,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       {/* Floating Action Play Button */}
       <Pressable
         style={styles.floatingPlay}
-        onPress={handleLiveAartiPress}
+        onPress={handleFloatingPlayPress}
         accessibilityRole="button"
-        accessibilityLabel="Open player"
+        accessibilityLabel={isPlaying ? "Pause music" : "Play music"}
       >
-        <Ionicons name="play" size={28} color="#ffffff" />
+        <Ionicons name={isPlaying ? "pause" : "play"} size={28} color="#ffffff" />
       </Pressable>
     </SafeAreaView>
   );
