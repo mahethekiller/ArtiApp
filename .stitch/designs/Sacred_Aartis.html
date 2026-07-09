@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sacred Aartis - Shanti Dhwani</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#6e5c00",
+                        "surface": "#fbf9f1",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-highest": "#e4e3db",
+                        "outline-variant": "#dbc2b0",
+                        "inverse-primary": "#ffb77a",
+                        "on-primary-fixed": "#2e1500",
+                        "on-background": "#1b1c17",
+                        "primary-container": "#ff9933",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#f5f4ec",
+                        "surface-bright": "#fbf9f1",
+                        "tertiary-fixed": "#ffdad4",
+                        "outline": "#887364",
+                        "tertiary-fixed-dim": "#ffb4a8",
+                        "error": "#ba1a1a",
+                        "surface-container": "#f0eee6",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#8f0f07",
+                        "on-primary": "#ffffff",
+                        "secondary": "#705d00",
+                        "background": "#fbf9f1",
+                        "primary": "#8f4e00",
+                        "surface-dim": "#dcdad2",
+                        "primary-fixed": "#ffdcc2",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#8f4e00",
+                        "primary-fixed-dim": "#ffb77a",
+                        "tertiary-container": "#ff9585",
+                        "secondary-fixed-dim": "#e9c400",
+                        "on-primary-fixed-variant": "#6d3a00",
+                        "on-surface-variant": "#554336",
+                        "on-secondary-fixed": "#221b00",
+                        "inverse-surface": "#30312c",
+                        "on-primary-container": "#693800",
+                        "surface-variant": "#e4e3db",
+                        "secondary-container": "#fcd400",
+                        "on-tertiary-container": "#8c0c05",
+                        "on-surface": "#1b1c17",
+                        "on-secondary-fixed-variant": "#544600",
+                        "inverse-on-surface": "#f3f1e9",
+                        "surface-container-high": "#eae8e0",
+                        "secondary-fixed": "#ffe16d",
+                        "on-tertiary-fixed": "#410000",
+                        "tertiary": "#b22b1d",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "container-margin": "24px",
+                        "gutter": "16px",
+                        "section-gap": "48px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Noto Serif"],
+                        "headline-lg-mobile": ["Noto Serif"],
+                        "headline-lg": ["Noto Serif"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["28px", {"lineHeight": "34px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "38px", "fontWeight": "700"}],
+                        "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .divine-glow {
+            box-shadow: 0 10px 40px -10px rgba(143, 78, 0, 0.15);
+        }
+        .saffron-gradient {
+            background: linear-gradient(135deg, #ff9933 0%, #8f4e00 100%);
+        }
+        .grainy-surface {
+            background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md grainy-surface min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface-bright/80 backdrop-blur-md shadow-sm">
+<div class="flex items-center justify-between px-6 h-16 w-full max-w-[1200px] mx-auto">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-primary-container/20 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Sacred Aartis</h1>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="A serene portrait of a young person with a calm expression, wearing traditional spiritual attire, with a soft warm glow illuminating their face. The background is a soft-focus interior of a peaceful Indian home shrine with marigold flowers and a small oil lamp flickering, maintaining a divine and respectful aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBvBuJa1oNycxI5YoDzjHkQoYnKR3qjNo-_Dk3w6zmWoVqUGtVLM6l9DafErf3G3QHX7Jy1LUh_FK6xoPfeuTkEB3y0f9vX_caoU0BF4b8qQALb2cA5GuikID_F0leuBEwDcx5Muw8FCikGYSo8CJnrzQpFc6c820E4w1WoraFy4tF-HLD6p1DpOkPeUuMnB4OHhmIB8lufw_wzNx194pGYvZAVdiGJo08cNj5cTFvo0xic9r5Ze9tkGlO3C2B2-p4hAsnEa64AxQ"/>
+</div>
+</div>
+</header>
+<main class="pt-20 px-6 max-w-[1200px] mx-auto">
+<!-- Search Section -->
+<section class="mt-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full h-12 pl-12 pr-4 bg-surface-container-low border-none rounded-2xl focus:ring-2 focus:ring-primary-container text-body-md placeholder:text-outline transition-all divine-glow" placeholder="Search for your favorite Aarti..." type="text"/>
+</div>
+</section>
+<!-- Category Chips -->
+<section class="mt-6 overflow-x-auto hide-scrollbar flex gap-3 pb-2">
+<button class="flex-shrink-0 px-6 py-2 rounded-full bg-primary-container text-on-primary-container font-semibold shadow-md active:scale-95 transition-transform">
+                Popular
+            </button>
+<button class="flex-shrink-0 px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary-container/10 active:scale-95 transition-all">
+                Morning
+            </button>
+<button class="flex-shrink-0 px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary-container/10 active:scale-95 transition-all">
+                Evening
+            </button>
+<button class="flex-shrink-0 px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary-container/10 active:scale-95 transition-all">
+                Festive
+            </button>
+<button class="flex-shrink-0 px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary-container/10 active:scale-95 transition-all">
+                Peaceful
+            </button>
+</section>
+<!-- Divine Featured Card -->
+<section class="mt-8 relative h-48 rounded-3xl overflow-hidden shadow-xl group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A breathtaking cinematic view of a majestic Hindu temple at sunrise. The sky is a blend of deep saffron and soft gold. Soft mist swirls around the intricately carved temple spires. In the foreground, glowing oil lamps are arranged in a circular pattern, casting a warm, spiritual light on the ancient stone floor. The atmosphere is quiet, meditative, and holy." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB7YSI6xNfmu_34owBK024UMKFOahBy6XpQaMravuj4pHnxDIO7YiZ80HTeIIl8-kpENnXBGtgqFAH7S9QeoPw7pez65f-YNw_u_afc-M39UYgFA2o1FGnEu4fg58qxptPCTDZef5M6lP_4Ux2OsmiYF8AoA-tHgtT699TuD4uil1gXYRQ8bjacZVH6slMgsiGjIiQpRPTqjC-99jMN6rJp1phasmKepDGJlaFfAvzsq7uhxz3R1Ux6VnDPMEfDhHBKwrVfnDNn4m4')">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="absolute bottom-6 left-6 right-6">
+<span class="text-secondary-fixed font-label-sm uppercase tracking-widest bg-black/30 backdrop-blur-sm px-3 py-1 rounded-md">Trending Today</span>
+<h2 class="text-white font-headline-md text-headline-md mt-2">Shree Ganesha Aarti</h2>
+<p class="text-white/80 font-body-md">Sukh Karta Dukh Harta</p>
+</div>
+</section>
+<!-- Aarti List -->
+<section class="mt-section-gap space-y-6">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-on-surface">Daily Selections</h3>
+<button class="text-primary font-semibold hover:underline">View All</button>
+</div>
+<!-- List Item 1 -->
+<div class="bg-surface-container-lowest rounded-3xl p-4 divine-glow flex flex-col gap-4 border border-outline-variant/30 hover:border-primary/30 transition-all group">
+<div class="flex gap-4">
+<div class="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A close-up artistic rendering of Lord Ganesha, radiating divine energy with subtle gold accents and floral decorations. The colors are dominated by warm saffron and rich marigold yellows. The style is semi-realistic with a soft, ethereal glow surrounding the deity, evoking a sense of immense peace and wisdom." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtvt2qVZKjGS6rovpKKd1BeYrUSDMUCnIiTN7qVyen_9ikLeip3VKvQiGCKchd_kfEsxkLhR5oVgDiHpXeGE61LeqgEPUYtcVLJCrqwBEgnfbG2qXrvTxwFmj7dpW9zkhXhi3tED_U5uLQKZ7Db5lCTbVMA5Gdw-wuuBmtmrMME1gq-O7_FjqTYUyEbEZAReMx6bhSWmcn6oEAmSXFYDtlvHMI_grLstzP-OpdnIWf1DW9Cvemd-T387l_LtZk2z2FlBchWEf4_rI"/>
+</div>
+<div class="flex-grow flex flex-col justify-center">
+<h4 class="font-headline-md text-[20px] text-on-surface leading-tight">Shree Ganesh Aarti</h4>
+<p class="text-on-surface-variant font-body-md text-sm">Traditional • 4:20 min</p>
+</div>
+<button class="self-center p-2 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 py-3 rounded-2xl bg-primary-container/10 text-primary font-semibold hover:bg-primary-container/20 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+                        Listen Audio
+                    </button>
+<button class="flex items-center justify-center gap-2 py-3 rounded-2xl bg-secondary-container text-on-secondary-container font-semibold hover:shadow-lg transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">videocam</span>
+                        Watch Video
+                    </button>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="bg-surface-container-lowest rounded-3xl p-4 divine-glow flex flex-col gap-4 border border-outline-variant/30 hover:border-primary/30 transition-all group">
+<div class="flex gap-4">
+<div class="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A powerful and spiritual depiction of Lord Hanuman in a meditative posture, with a serene yet strong expression. The background is a soft, glowing sunset over a sacred landscape. Gold and copper tones highlight the details of his form, with a focus on a divine aura and soft mountain mist in the distance. Professional digital painting style with deep spiritual depth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6AkRDh86_yTkIKIht_Owr59P98-Vd-QpAS0W_tGtTERp3m9SpiYsKJloDJz5FGBbFIkNroMeehsUHnlUGO_8a8afgfPhvOxiKiPdg98HPmPQeGmDEvQ7SDvdMDJ5VZvudEGTN2TvLavvNH-vdhNQVg5r_GItmvxmLF_OW4EeI3rIV6H6dDpSRSfyfzL_8MxF8qDjpwF7BInT688MiLcldg0zL4N1NPULv93_S1nM3oKK35Thl2xPtjtLn12zI0N-sFQdAklsPZsI"/>
+</div>
+<div class="flex-grow flex flex-col justify-center">
+<h4 class="font-headline-md text-[20px] text-on-surface leading-tight">Hanuman Chalisa</h4>
+<p class="text-on-surface-variant font-body-md text-sm">Full Recital • 9:15 min</p>
+</div>
+<button class="self-center p-2 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 py-3 rounded-2xl bg-primary-container/10 text-primary font-semibold hover:bg-primary-container/20 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+                        Listen Audio
+                    </button>
+<button class="flex items-center justify-center gap-2 py-3 rounded-2xl bg-secondary-container text-on-secondary-container font-semibold hover:shadow-lg transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">videocam</span>
+                        Watch Video
+                    </button>
+</div>
+</div>
+<!-- List Item 3 -->
+<div class="bg-surface-container-lowest rounded-3xl p-4 divine-glow flex flex-col gap-4 border border-outline-variant/30 hover:border-primary/30 transition-all group">
+<div class="flex gap-4">
+<div class="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A graceful and luminous representation of Goddess Lakshmi seated on a vibrant lotus flower. Gold coins are depicted in a soft-focus cascade around her, symbolizing prosperity and light. The color palette features rich pinks, warm golds, and soft cream tones. The lighting is ethereal and angelic, capturing a sense of abundant peace and divine grace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgQSV5JGW7rXiR2eP7gb0plBiW96XP3-Mxkf76Src5Ar5mRmRIF3DW9g7E8hO7xHzCKa1doZr_awk0E1B7EsOXvFddmMSQZeB6HQPzun_vRVHL_E7ay6bD6GA01FonCab8oy_tnImFe85jJDO_uItGvMwX_yqe-FOc3zBLOBfXIQ39rK8mLGvN8tykjr1Bgbejldg9nlfvW03I-r6tVu52PXftWap1pfn2M7TzBwxBrSLD5kUIPMgw-rZ8iqy3azZE9hTByRLzU_I"/>
+</div>
+<div class="flex-grow flex flex-col justify-center">
+<h4 class="font-headline-md text-[20px] text-on-surface leading-tight">Lakshmi Mata Aarti</h4>
+<p class="text-on-surface-variant font-body-md text-sm">Evening Prayer • 5:45 min</p>
+</div>
+<button class="self-center p-2 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 py-3 rounded-2xl bg-primary-container/10 text-primary font-semibold hover:bg-primary-container/20 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+                        Listen Audio
+                    </button>
+<button class="flex items-center justify-center gap-2 py-3 rounded-2xl bg-secondary-container text-on-secondary-container font-semibold hover:shadow-lg transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">videocam</span>
+                        Watch Video
+                    </button>
+</div>
+</div>
+</section>
+<!-- Decorative Divider -->
+<div class="flex justify-center items-center py-12 opacity-30">
+<div class="h-[1px] w-12 bg-primary"></div>
+<span class="material-symbols-outlined text-primary mx-4">settings_suggest</span>
+<div class="h-[1px] w-12 bg-primary"></div>
+</div>
+</main>
+<!-- Bottom Nav Bar -->
+<nav class="fixed bottom-0 w-full flex justify-around items-center px-4 py-3 pb-8 bg-surface-container-low/95 backdrop-blur-lg shadow-[0_-8px_30px_rgba(143,78,0,0.08)] z-50 rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-colors active:scale-90" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-2 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">temple_hindu</span>
+<span class="font-label-sm text-label-sm mt-1">Aarti</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-colors active:scale-90" href="#">
+<span class="material-symbols-outlined">wallpaper</span>
+<span class="font-label-sm text-label-sm mt-1">Gallery</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-colors active:scale-90" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for category selection
+        const categories = document.querySelectorAll('section.overflow-x-auto button');
+        categories.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categories.forEach(b => {
+                    b.classList.remove('bg-primary-container', 'text-on-primary-container', 'shadow-md');
+                    b.classList.add('border', 'border-primary', 'text-primary');
+                });
+                btn.classList.remove('border', 'border-primary', 'text-primary');
+                btn.classList.add('bg-primary-container', 'text-on-primary-container', 'shadow-md');
+            });
+        });
+
+        // Floating action button logic if needed (suppressed per guidelines)
+    </script>
+</body></html>

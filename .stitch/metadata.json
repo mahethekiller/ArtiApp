@@ -1,0 +1,48 @@
+{
+  "projectId": "8690335390473969717",
+  "title": "Divine Aarti Sangrah",
+  "deviceType": "MOBILE",
+  "Last Sync Time": "2026-07-10T00:07:35Z",
+  "screens": {
+    "46c3412278fc46f8a70ecbcb16196130": {
+      "id": "46c3412278fc46f8a70ecbcb16196130",
+      "label": "Spiritual Profile",
+      "sourceScreen": "projects/8690335390473969717/screens/46c3412278fc46f8a70ecbcb16196130",
+      "width": 780,
+      "height": 3782,
+      "deviceType": "MOBILE"
+    },
+    "f02e9079ebdd49d6b5349908b25a87d8": {
+      "id": "f02e9079ebdd49d6b5349908b25a87d8",
+      "label": "Divine Gallery",
+      "sourceScreen": "projects/8690335390473969717/screens/f02e9079ebdd49d6b5349908b25a87d8",
+      "width": 780,
+      "height": 3692,
+      "deviceType": "MOBILE"
+    },
+    "01cdd8fa5d934e03ac87d7834af42fab": {
+      "id": "01cdd8fa5d934e03ac87d7834af42fab",
+      "label": "Sacred Aartis",
+      "sourceScreen": "projects/8690335390473969717/screens/01cdd8fa5d934e03ac87d7834af42fab",
+      "width": 780,
+      "height": 2692,
+      "deviceType": "MOBILE"
+    },
+    "47916ebf3cb6433e9c0f57e2022e3013": {
+      "id": "47916ebf3cb6433e9c0f57e2022e3013",
+      "label": "Divine Home",
+      "sourceScreen": "projects/8690335390473969717/screens/47916ebf3cb6433e9c0f57e2022e3013",
+      "width": 780,
+      "height": 3346,
+      "deviceType": "MOBILE"
+    },
+    "bdd7f8b9fc4640b898e06d0a32df19b1": {
+      "id": "bdd7f8b9fc4640b898e06d0a32df19b1",
+      "label": "Aarti Player",
+      "sourceScreen": "projects/8690335390473969717/screens/bdd7f8b9fc4640b898e06d0a32df19b1",
+      "width": 780,
+      "height": 2440,
+      "deviceType": "MOBILE"
+    }
+  }
+}

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Divine Gallery - Shanti Dhwani</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#dcdad2",
+                    "on-primary-fixed-variant": "#6d3a00",
+                    "on-tertiary-fixed-variant": "#8f0f07",
+                    "surface-container-low": "#f5f4ec",
+                    "on-secondary-fixed": "#221b00",
+                    "surface-bright": "#fbf9f1",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#ff9585",
+                    "inverse-primary": "#ffb77a",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#e9c400",
+                    "primary-fixed-dim": "#ffb77a",
+                    "inverse-on-surface": "#f3f1e9",
+                    "on-primary-fixed": "#2e1500",
+                    "tertiary": "#b22b1d",
+                    "on-background": "#1b1c17",
+                    "on-tertiary-container": "#8c0c05",
+                    "inverse-surface": "#30312c",
+                    "on-primary-container": "#693800",
+                    "on-surface-variant": "#554336",
+                    "secondary": "#705d00",
+                    "surface-variant": "#e4e3db",
+                    "on-secondary-fixed-variant": "#544600",
+                    "secondary-container": "#fcd400",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#f0eee6",
+                    "on-tertiary-fixed": "#410000",
+                    "outline": "#887364",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#1b1c17",
+                    "surface-tint": "#8f4e00",
+                    "primary-container": "#ff9933",
+                    "background": "#fbf9f1",
+                    "surface-container-high": "#eae8e0",
+                    "tertiary-fixed": "#ffdad4",
+                    "on-secondary-container": "#6e5c00",
+                    "primary-fixed": "#ffdcc2",
+                    "primary": "#8f4e00",
+                    "on-secondary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface": "#fbf9f1",
+                    "secondary-fixed": "#ffe16d",
+                    "tertiary-fixed-dim": "#ffb4a8",
+                    "surface-container-highest": "#e4e3db",
+                    "outline-variant": "#dbc2b0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "base": "8px",
+                    "container-margin": "24px",
+                    "section-gap": "48px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Noto Serif"],
+                    "headline-lg-mobile": ["Noto Serif"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "headline-md": ["Noto Serif"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "38px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["28px", {"lineHeight": "34px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+        @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
+        @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+        .shimmer-bg {
+            background: linear-gradient(90deg, transparent, rgba(255, 153, 51, 0.05), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        body {
+            background-image: radial-gradient(circle at 50% 0%, rgba(255, 153, 51, 0.08) 0%, transparent 70%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-bright/80 backdrop-blur-md shadow-sm">
+<div class="flex items-center justify-between px-gutter h-16 w-full max-w-[1200px] mx-auto">
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-primary-container/20 transition-colors active:scale-95 duration-200 transition-transform text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Shanti Dhwani</h1>
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A clean, minimalist profile picture of a serene user, shot in warm, natural morning light against a soft cream background. The portrait has a high-end editorial feel with a focus on peace and tranquility, matching the saffron and gold palette of the Shanti Dhwani spiritual application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvH7OYpVKHagTzaCp0lWAmDWimbuuHtkdl3lW8tNfSeeb0tQo-GidoVM2iqyrxAKoMzPt2CKibydu5bSZfTvfVBVexyfEzO_fAVuttwGGxfe9d5y_tscexQqn5yd8deO_b80gdguXYqAzYzcxiNPK4-eHJ00MxYXAqT_Taz8b8vn9RoC-0jFDH_l78rTiW6VZb0-YltpsHSNWyjscwd76hjJwcL6xga1IEUDtSzeX3HBTFllL1KsfxKd_plnKUYja6WtpRWNE6PCg"/>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-gutter max-w-[1200px] mx-auto">
+<!-- Section Header -->
+<div class="mb-section-gap">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Divine Gallery</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                Discover a sacred collection of high-resolution wallpapers. Bring the divine presence to your screen with curated spiritual art.
+            </p>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-3 mb-8 overflow-x-auto pb-4 scrollbar-hide">
+<button class="px-6 py-2 rounded-full border border-primary bg-primary text-on-primary font-label-sm text-label-sm whitespace-nowrap">All Deities</button>
+<button class="px-6 py-2 rounded-full border border-outline text-on-surface-variant hover:bg-primary-container/10 transition-colors font-label-sm text-label-sm whitespace-nowrap">Lord Krishna</button>
+<button class="px-6 py-2 rounded-full border border-outline text-on-surface-variant hover:bg-primary-container/10 transition-colors font-label-sm text-label-sm whitespace-nowrap">Lord Shiva</button>
+<button class="px-6 py-2 rounded-full border border-outline text-on-surface-variant hover:bg-primary-container/10 transition-colors font-label-sm text-label-sm whitespace-nowrap">Goddess Durga</button>
+<button class="px-6 py-2 rounded-full border border-outline text-on-surface-variant hover:bg-primary-container/10 transition-colors font-label-sm text-label-sm whitespace-nowrap">Lord Ganesha</button>
+</div>
+<!-- Masonry Gallery -->
+<div class="masonry-grid">
+<!-- Item 1: Krishna -->
+<div class="masonry-item group relative overflow-hidden rounded-xl bg-surface-container shadow-[0_4px_20px_-5px_rgba(143,78,0,0.15)] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(143,78,0,0.25)]">
+<img class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A breathtaking, hyper-realistic digital painting of Lord Krishna standing in a mystical forest during twilight. The scene is bathed in ethereal blue and gold light, with glowing peacock feathers and a divine flute. The artistic style is modern yet deeply respectful, using a palette of deep indigos and brilliant saffron to evoke a sense of transcendental peace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2Z8WNKUN0sslxUadE3DXWXHBQt_91i0meQeNllXPYJOpFLggtIeJbbRRyAJmeEzYpwsw_zyx-RH8Ym5sK01KKg03BSHeErogPVJBAKUl1jMwGGqZfPZ-tjdYl16uUIkq0H9fJbiX_QFkPo-tt44dVcw1AeLNpfuvAzVUoPzRKKVDz7MJ_I9I5SK_e2yrk-15AxGYeC51tU6gK0UW28qCOKblvIqczqXGajSbnjDW9pSSWeZjQHfXANO89oG60Y9D-eV4DMnXwbKs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+<p class="text-white font-headline-md text-headline-md mb-4">Muralidhar Krishna</p>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-on-primary font-label-sm text-label-sm py-3 rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[18px]">download</span> Download
+                        </button>
+<button class="flex-1 bg-white/20 backdrop-blur-md text-white font-label-sm text-label-sm py-3 rounded-lg border border-white/30 flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[18px]">wallpaper</span> Set
+                        </button>
+</div>
+</div>
+</div>
+<!-- Item 2: Shiva -->
+<div class="masonry-item group relative overflow-hidden rounded-xl bg-surface-container shadow-[0_4px_20px_-5px_rgba(143,78,0,0.15)] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(143,78,0,0.25)]">
+<img class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A majestic depiction of Lord Shiva meditating on Mount Kailash, surrounded by swirling snow and ancient stone. The lighting mimics a cold Himalayan morning with a soft golden glow reflecting off the snow. The style combines traditional iconography with modern cinematic lighting, emphasizing strength and silence through a palette of ash-grey, turquoise, and brilliant orange fire." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5mHP4xx1X4PvjvAPY5xrmUqEmrMw74sT4e-r9z_MN4owH0ybD9-B9b10DOdfo946LKmm9MlzqHje3D5vyNhQDn8a1nO3TJBmfofA8L_azFwyenLVNwBFCpo09rZzkHc4y-Ehw8zMsg8F_fqAyH1zcESAnTKl5MsmPJ5baSrktsdtMeaF8QpVc1U4o2B1jpPrMwj_7hZQLl4ysojVaDAryKErob7HcEEomOALaj_UBn5EGrXgS9smPCnh2U6Fj1a0W4nB6VrYqLfo"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+<p class="text-white font-headline-md text-headline-md mb-4">Adiyogi Mahadev</p>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-on-primary font-label-sm text-label-sm py-3 rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span> Download
+                        </button>
+<button class="flex-1 bg-white/20 backdrop-blur-md text-white font-label-sm text-label-sm py-3 rounded-lg border border-white/30 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">wallpaper</span> Set
+                        </button>
+</div>
+</div>
+</div>
+<!-- Item 3: Ganesha -->
+<div class="masonry-item group relative overflow-hidden rounded-xl bg-surface-container shadow-[0_4px_20px_-5px_rgba(143,78,0,0.15)] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(143,78,0,0.25)]">
+<img class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A vibrant and colorful contemporary art piece of Lord Ganesha, featuring intricate floral patterns and gold leaf accents. The background is a soft cream with shimmering mandalas. The lighting is bright and celebratory, highlighting the textures of silk and polished brass. The composition is clean and focused, using a rich palette of marigold, magenta, and emerald green." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdIp6jXrciP6vg3yMOTBqoJXHNHSGHTLbISmVyUt74gEkNZgcMCZKpc1twXN7Twgjzbuog5SxLRhabYB9VqeUo0HcgG9SYJww5YOaj66Uwp4FZy1kXhTd1Gj069boPyKeHjA1PIiP8x7IgFjmjOcYydxIeT9uI_Q7KrM39-tr6BTz1-3Jf5CN4yLW5zHeAntgy9lh8mnhG8qVNpgLRiN1I3FBiUhwqHdxOJux84XbMpN4HCHtpK5evC5FXNiSpcoio0FHYtaWl9dQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+<p class="text-white font-headline-md text-headline-md mb-4">Vighnaharta</p>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-on-primary font-label-sm text-label-sm py-3 rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span> Download
+                        </button>
+<button class="flex-1 bg-white/20 backdrop-blur-md text-white font-label-sm text-label-sm py-3 rounded-lg border border-white/30 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">wallpaper</span> Set
+                        </button>
+</div>
+</div>
+</div>
+<!-- Item 4: Durga -->
+<div class="masonry-item group relative overflow-hidden rounded-xl bg-surface-container shadow-[0_4px_20px_-5px_rgba(143,78,0,0.15)] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(143,78,0,0.25)]">
+<img class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A powerful portrait of Goddess Durga, radiating divine energy with her ten arms holding sacred weapons. The background is a dramatic sunset sky with clouds of crimson and gold. The lighting is intense and focused on her serene yet fierce expression. The visual style is detailed and skeuomorphic, feeling like an ancient temple mural brought to life with modern digital techniques." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBm4KqPiccpsk_fbC--KTOiiiYDWNN2Hy1P0QZEvZtXZiJ9hhk7DOPx5KTk5W4jgR4AhYZFoa0GRCCxH018nvw4JUdQDjUn9qs3wt7VNHiKIk37_7i25SSXQBls6JoxibaUiBrQpHg-0C7rxI5LauYrp0_xnCakt2afkiDrHdBI9-0yAfAfS3C93UjWlb3CyNZzDHvIblwjHXrtCe2tkv3TN4e1QSDn9vz2ukUgp4Xkh_mW3qRzxFHk4lecVUrKNhx4ARAOwqTw-3A"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+<p class="text-white font-headline-md text-headline-md mb-4">Maa Durga</p>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-on-primary font-label-sm text-label-sm py-3 rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span> Download
+                        </button>
+<button class="flex-1 bg-white/20 backdrop-blur-md text-white font-label-sm text-label-sm py-3 rounded-lg border border-white/30 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">wallpaper</span> Set
+                        </button>
+</div>
+</div>
+</div>
+<!-- Item 5: Hanuman -->
+<div class="masonry-item group relative overflow-hidden rounded-xl bg-surface-container shadow-[0_4px_20px_-5px_rgba(143,78,0,0.15)] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(143,78,0,0.25)]">
+<img class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A dynamic action shot of Lord Hanuman flying across a star-lit night sky, carrying the Sanjeevani mountain. His form is muscular and heroic, glowing with a soft orange aura. The lighting is dark and moody, with the mountain itself radiating a magical green light. The style is grand and epic, reminiscent of high-end mythological concept art." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXjkvG1qGHWe2gVai3iQKaqP6ftiW7hlm57pF6LA-Bsp1fbDwWU8DpyRkQ6P_lzzGlxXnWh-pbYWnngg8ZKjq8OZyG3Qxy-Vah20ebwQWRVE6afh-3_obrOya3BFbXHe2hcykOhnNlw5rUKZJL0zjXhm5KnAC9D2TVrIt_qVWSeF8tuXEaVPidVTXOzGirAnTD_ONUM8eD5vMutWyGMMpWTkMVLZT7eemvROwwd5VgJjAN55_9XET7rUOWzRjSVdM6zpYSuUVHbA0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+<p class="text-white font-headline-md text-headline-md mb-4">Bajrangbali</p>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-on-primary font-label-sm text-label-sm py-3 rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span> Download
+                        </button>
+<button class="flex-1 bg-white/20 backdrop-blur-md text-white font-label-sm text-label-sm py-3 rounded-lg border border-white/30 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">wallpaper</span> Set
+                        </button>
+</div>
+</div>
+</div>
+<!-- Item 6: Saraswati -->
+<div class="masonry-item group relative overflow-hidden rounded-xl bg-surface-container shadow-[0_4px_20px_-5px_rgba(143,78,0,0.15)] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(143,78,0,0.25)]">
+<img class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A serene image of Goddess Saraswati seated on a white lotus in a peaceful lake. She is playing the Veena, surrounded by white swans and blooming flowers. The lighting is high-key and airy, creating a sense of pure knowledge and grace. The palette is dominated by whites, light golds, and soft pastel blues, following a clean, light-mode corporate modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-dzwSpHGZByArKpbbFR4WcY-VYf1BMtegUs4K_OcRbsienOtKqg-cpWbJsUt5yBQqj4u_RjCM5O3ty_HAP8qCtsTlgBIKzAqk0KXk_bFdqPac_IhyAecQoCwu56R0_yo-pEtH4h62TJL160Is3pTNlBuhyj-siW0D8vh1qs2wXLeR3zvlqLDYLbln2_MUjUXO8ibcYMyeN0NRM0a9R6pCKstYh6JAv6PwkBmMh6TlnEx0dLA2YQH50Vx3xVxmBD-TPirkB2cYZys"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+<p class="text-white font-headline-md text-headline-md mb-4">Goddess of Wisdom</p>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-on-primary font-label-sm text-label-sm py-3 rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span> Download
+                        </button>
+<button class="flex-1 bg-white/20 backdrop-blur-md text-white font-label-sm text-label-sm py-3 rounded-lg border border-white/30 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">wallpaper</span> Set
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-container-low/95 backdrop-blur-lg shadow-[0_-8px_30px_rgba(143,78,0,0.08)]">
+<div class="w-full flex justify-around items-center px-4 py-3 pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">temple_hindu</span>
+<span class="font-label-sm text-label-sm">Aarti</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">wallpaper</span>
+<span class="font-label-sm text-label-sm">Gallery</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</div>
+</nav>
+<!-- Micro-interaction script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    let ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    this.appendChild(ripple);
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        });
+    </script>
+<style>
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</body></html>

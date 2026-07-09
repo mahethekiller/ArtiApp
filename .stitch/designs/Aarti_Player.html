@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Be+Vietnam+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "surface-dim": "#dcdad2",
+                  "on-primary-fixed-variant": "#6d3a00",
+                  "on-tertiary-fixed-variant": "#8f0f07",
+                  "surface-container-low": "#f5f4ec",
+                  "on-secondary-fixed": "#221b00",
+                  "surface-bright": "#fbf9f1",
+                  "on-error": "#ffffff",
+                  "tertiary-container": "#ff9585",
+                  "inverse-primary": "#ffb77a",
+                  "error-container": "#ffdad6",
+                  "on-tertiary": "#ffffff",
+                  "error": "#ba1a1a",
+                  "secondary-fixed-dim": "#e9c400",
+                  "primary-fixed-dim": "#ffb77a",
+                  "inverse-on-surface": "#f3f1e9",
+                  "on-primary-fixed": "#2e1500",
+                  "tertiary": "#b22b1d",
+                  "on-background": "#1b1c17",
+                  "on-tertiary-container": "#8c0c05",
+                  "inverse-surface": "#30312c",
+                  "on-primary-container": "#693800",
+                  "on-surface-variant": "#554336",
+                  "secondary": "#705d00",
+                  "surface-variant": "#e4e3db",
+                  "on-secondary-fixed-variant": "#544600",
+                  "secondary-container": "#fcd400",
+                  "on-primary": "#ffffff",
+                  "surface-container": "#f0eee6",
+                  "on-tertiary-fixed": "#410000",
+                  "outline": "#887364",
+                  "surface-container-lowest": "#ffffff",
+                  "on-surface": "#1b1c17",
+                  "surface-tint": "#8f4e00",
+                  "primary-container": "#ff9933",
+                  "background": "#fbf9f1",
+                  "surface-container-high": "#eae8e0",
+                  "tertiary-fixed": "#ffdad4",
+                  "on-secondary-container": "#6e5c00",
+                  "primary-fixed": "#ffdcc2",
+                  "primary": "#8f4e00",
+                  "on-secondary": "#ffffff",
+                  "on-error-container": "#93000a",
+                  "surface": "#fbf9f1",
+                  "secondary-fixed": "#ffe16d",
+                  "tertiary-fixed-dim": "#ffb4a8",
+                  "surface-container-highest": "#e4e3db",
+                  "outline-variant": "#dbc2b0"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "gutter": "16px",
+                  "base": "8px",
+                  "container-margin": "24px",
+                  "section-gap": "48px"
+          },
+          "fontFamily": {
+                  "headline-lg": ["Noto Serif"],
+                  "headline-lg-mobile": ["Noto Serif"],
+                  "label-sm": ["Be Vietnam Pro"],
+                  "headline-md": ["Noto Serif"],
+                  "body-lg": ["Be Vietnam Pro"],
+                  "body-md": ["Be Vietnam Pro"]
+          },
+          "fontSize": {
+                  "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                  "headline-lg-mobile": ["32px", {"lineHeight": "38px", "fontWeight": "700"}],
+                  "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                  "headline-md": ["28px", {"lineHeight": "34px", "fontWeight": "600"}],
+                  "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                  "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background: radial-gradient(circle at top, #fbf9f1 0%, #f5f4ec 100%);
+      min-height: 100vh;
+    }
+    .aura-glow {
+      box-shadow: 0 0 60px 20px rgba(143, 78, 0, 0.15);
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 60px 10px rgba(143, 78, 0, 0.1); }
+      50% { box-shadow: 0 0 80px 30px rgba(255, 153, 51, 0.2); }
+    }
+    .progress-thumb::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      background: #8f4e00;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(143, 78, 0, 0.4);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(143, 78, 0, 0.05);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #dbc2b0;
+      border-radius: 10px;
+    }
+    .spiritual-gradient {
+      background: linear-gradient(180deg, rgba(251, 249, 241, 0) 0%, rgba(245, 244, 236, 1) 100%);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed overflow-x-hidden">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface-bright/80 backdrop-blur-md shadow-sm">
+<div class="flex items-center justify-between px-gutter h-16 w-full max-w-[1200px] mx-auto">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary hover:bg-primary-container/20 p-2 rounded-full transition-colors active:scale-95 duration-200">menu</button>
+<span class="font-headline-md text-headline-md text-primary tracking-tight">Shanti Dhwani</span>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container/30 cursor-pointer active:scale-95 transition-transform">
+<img class="w-full h-full object-cover" data-alt="A premium close-up portrait of a serene Indian devotee with a peaceful expression, set against a soft bokeh background of a golden temple during sunrise. The lighting is ethereal and warm, consistent with a high-end spiritual app aesthetic using saffron and cream tones. Soft depth of field highlights the subject's calm presence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0njxtGvCNITax70swFvTcv1s7HJwCULuRux6rfDbhPnJtP0Ca7UL8-cJcp-AskQORMeIZB7fP_lyG0bavN04YlgeeXDKiin8NVC3SGpCD7i2zdccz4yoD5BRimpNcd9hE0_Z3vWudnPmaLB8cyhfV2MQVJ8KGNA9vxLTnP5Be-S6dAddwoe3grtIM5_eO4a7lmrq8Tp66KsuMUgLNuAcMDSMzHpwBFVB1eEEmesT1nvJQjrJMLk9HuNXnkGyySRLTFGN0YD1Q4L0"/>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-12 px-container-margin max-w-[1200px] mx-auto flex flex-col items-center">
+<!-- Deity Section -->
+<div class="relative group mb-8">
+<div class="aura-glow rounded-full p-2 bg-surface-container-low border border-outline-variant/30 transition-transform duration-700 group-hover:scale-[1.02]">
+<div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="A magnificent, detailed illustration of Lord Ganesha in a meditative pose. The artwork features rich saffron, gold, and deep red tones with intricate jewelry and a glowing divine aura radiating behind him. The background is a soft, celestial stone texture, evoking a sacred temple atmosphere. High-fidelity spiritual digital art with soft lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdoRCxaFBOqwbMEqM8_aKUMJtLqqPGdQSzQqdyhpj0r8UhlE68YlfLmb8BbiRoPMYImMAFLw3EGcxjKi724SWAdb6yEJ6-IW0oBEX5DrjRBwtWrSbo8bA3HpQScjbx15uLWX1aY0_qBTXJE-XGNCO5_6WcHyBjn3BD1PtC7DDzpE8Jra3g-VBqq1WUwHFyg9CUNXvwLuXV-iiUGeTegKaB97lHHHVMU3J1JRw6eoSAhondnoer6WhOoNAvKXbHwi9AEHShwqL7gq0"/>
+</div>
+</div>
+<!-- Decorative Elements -->
+<div class="absolute -top-4 -right-4 text-primary opacity-40 animate-pulse">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">brightness_7</span>
+</div>
+</div>
+<!-- Title & Metadata -->
+<div class="text-center mb-8">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-2">Sukh Karta Dukh Harta</h1>
+<p class="font-body-md text-primary-fixed-dim font-semibold tracking-widest uppercase">Ganesh Aarti • Traditional</p>
+</div>
+<!-- Audio Controls Container -->
+<div class="w-full max-w-xl bg-surface-container-low rounded-3xl p-6 md:p-8 shadow-sm border border-outline-variant/20 mb-section-gap">
+<!-- Progress Bar -->
+<div class="mb-6">
+<div class="flex justify-between text-label-sm font-label-sm text-on-surface-variant mb-2">
+<span>02:45</span>
+<span>05:12</span>
+</div>
+<div class="relative h-2 bg-primary-fixed rounded-full overflow-hidden">
+<div class="absolute top-0 left-0 h-full w-[45%] bg-primary transition-all duration-300"></div>
+<input class="progress-thumb absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" max="100" min="0" type="range" value="45"/>
+</div>
+</div>
+<!-- Control Buttons -->
+<div class="flex items-center justify-between">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors active:scale-90 duration-150">repeat</button>
+<div class="flex items-center gap-8 md:gap-12">
+<button class="material-symbols-outlined text-3xl text-primary hover:bg-primary-container/20 p-2 rounded-full transition-all active:scale-90">skip_previous</button>
+<button class="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary-container to-primary text-on-primary shadow-lg hover:shadow-primary/30 transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-4xl group-active:scale-90" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+<button class="material-symbols-outlined text-3xl text-primary hover:bg-primary-container/20 p-2 rounded-full transition-all active:scale-90">skip_next</button>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors active:scale-90 duration-150">playlist_play</button>
+</div>
+</div>
+<!-- Lyrics Section -->
+<div class="w-full max-w-2xl">
+<div class="flex items-center justify-center gap-4 mb-6">
+<div class="h-[1px] w-12 bg-outline-variant"></div>
+<span class="material-symbols-outlined text-primary-fixed-dim">local_florist</span>
+<h2 class="font-headline-md text-headline-md text-primary">Aarti Lyrics</h2>
+<span class="material-symbols-outlined text-primary-fixed-dim">local_florist</span>
+<div class="h-[1px] w-12 bg-outline-variant"></div>
+</div>
+<div class="h-80 overflow-y-auto custom-scrollbar pr-4 text-center">
+<div class="space-y-8 pb-20">
+<p class="font-headline-md text-headline-md leading-relaxed text-on-surface opacity-100 transition-opacity">
+            Sukhkarta Dukhharta Varta Vighnachi<br/>
+            Nurvi Purvi Prem Krupa Jayachi
+          </p>
+<p class="font-headline-md text-headline-md leading-relaxed text-on-surface-variant opacity-60">
+            Sarvangi Sundar Uti Shendurachi<br/>
+            Kanthi Jhalke Maal Muktaphalanchi
+          </p>
+<p class="font-headline-md text-headline-md leading-relaxed text-on-surface-variant opacity-60">
+            Jai Dev Jai Dev Jai Mangal Murti<br/>
+            Darshan Maatre Maan Kaamana Purti
+          </p>
+<p class="font-headline-md text-headline-md leading-relaxed text-on-surface-variant opacity-60">
+            Ratnakhachit Phara Tuj Gauri Kumara<br/>
+            Chandanaachi Uti Kumkumkeshara
+          </p>
+<p class="font-headline-md text-headline-md leading-relaxed text-on-surface-variant opacity-60">
+            Hirejadit Mukut Shobhato Bara<br/>
+            Runjhunati Nupure Charani Ghagariya
+          </p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-container-low/95 backdrop-blur-lg shadow-[0_-8px_30px_rgba(143,78,0,0.08)]">
+<div class="flex justify-around items-center px-4 py-3 pb-safe max-w-[1200px] mx-auto">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-colors active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">temple_hindu</span>
+<span class="font-label-sm text-label-sm mt-1">Aarti</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-colors active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">wallpaper</span>
+<span class="font-label-sm text-label-sm mt-1">Gallery</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-colors active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</div>
+</nav>
+<script>
+    // Lightweight micro-interaction for playback progress simulation
+    document.addEventListener('DOMContentLoaded', () => {
+      const progressBar = document.querySelector('input[type="range"]');
+      const progressFill = document.querySelector('.bg-primary.transition-all');
+      
+      progressBar.addEventListener('input', (e) => {
+        const val = e.target.value;
+        progressFill.style.width = val + '%';
+      });
+
+      // Simple click animation for control buttons
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.classList.add('scale-95');
+          setTimeout(() => btn.classList.remove('scale-95'), 150);
+        });
+      });
+    });
+  </script>
+</body></html>

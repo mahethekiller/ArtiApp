@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shanti Dhwani - Daily Aarti &amp; Darshan</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#dcdad2",
+                    "on-primary-fixed-variant": "#6d3a00",
+                    "on-tertiary-fixed-variant": "#8f0f07",
+                    "surface-container-low": "#f5f4ec",
+                    "on-secondary-fixed": "#221b00",
+                    "surface-bright": "#fbf9f1",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#ff9585",
+                    "inverse-primary": "#ffb77a",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#e9c400",
+                    "primary-fixed-dim": "#ffb77a",
+                    "inverse-on-surface": "#f3f1e9",
+                    "on-primary-fixed": "#2e1500",
+                    "tertiary": "#b22b1d",
+                    "on-background": "#1b1c17",
+                    "on-tertiary-container": "#8c0c05",
+                    "inverse-surface": "#30312c",
+                    "on-primary-container": "#693800",
+                    "on-surface-variant": "#554336",
+                    "secondary": "#705d00",
+                    "surface-variant": "#e4e3db",
+                    "on-secondary-fixed-variant": "#544600",
+                    "secondary-container": "#fcd400",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#f0eee6",
+                    "on-tertiary-fixed": "#410000",
+                    "outline": "#887364",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#1b1c17",
+                    "surface-tint": "#8f4e00",
+                    "primary-container": "#ff9933",
+                    "background": "#fbf9f1",
+                    "surface-container-high": "#eae8e0",
+                    "tertiary-fixed": "#ffdad4",
+                    "on-secondary-container": "#6e5c00",
+                    "primary-fixed": "#ffdcc2",
+                    "primary": "#8f4e00",
+                    "on-secondary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface": "#fbf9f1",
+                    "secondary-fixed": "#ffe16d",
+                    "tertiary-fixed-dim": "#ffb4a8",
+                    "surface-container-highest": "#e4e3db",
+                    "outline-variant": "#dbc2b0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "base": "8px",
+                    "container-margin": "24px",
+                    "section-gap": "48px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Noto Serif"],
+                    "headline-lg-mobile": ["Noto Serif"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "headline-md": ["Noto Serif"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "38px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["28px", {"lineHeight": "34px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #fbf9f1;
+        font-family: 'Be Vietnam Pro', sans-serif;
+        color: #1b1c17;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      /* Custom Glow Shadow for Cards */
+      .sacred-glow {
+        box-shadow: 0 10px 40px -10px rgba(143, 78, 0, 0.12);
+      }
+      /* Gradient Text for Saffron Branding */
+      .saffron-gradient-text {
+        background: linear-gradient(135deg, #8f4e00 0%, #ff9933 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      /* Hidden scrollbar but functional */
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+      /* Texture Overlay */
+      .texture-overlay {
+        position: fixed;
+        inset: 0;
+        opacity: 0.03;
+        pointer-events: none;
+        background-image: url("https://www.transparenttextures.com/patterns/handmade-paper.png");
+        z-index: 100;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface selection:bg-primary-fixed-dim">
+<div class="texture-overlay"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-bright/80 backdrop-blur-md shadow-[0_4px_20px_-5px_rgba(143,78,0,0.1)] h-16 flex items-center">
+<div class="flex items-center justify-between px-gutter w-full max-w-[1200px] mx-auto">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-primary-container/20 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight font-bold">Shanti Dhwani</h1>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed ring-2 ring-primary-container/20">
+<img class="w-full h-full object-cover" data-alt="A serene portrait of a smiling Indian person in a white linen kurta, softly lit by morning sun in a calm, traditional home setting. The visual style is warm and high-quality, with a soft-focus background of marigold flowers and brass lamps. The image captures a sense of peaceful devotion and modern spiritual lifestyle." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYVimX74x8r6QBruDf_39ecOZcA73nPJm8LW0dFxluq2CLh4ERwp0zgp7JMHd9vJo-UB87S4HoO17nxxAchUSy2TTU_1nMUMDV4AuWOmLtLXpdR13eO0FaCTnJRHwNww-BMhP9Gyp2SYXeY9xr0rmg5_QBGu3BvjAgJBDAJ4W7EHwWujkAVuGQrWEHItRrD35ggB-gLRQMwV8jFxTR5YdB1YOuqpXqxmLvuhbDwjiJQCebGtGyNsEgFLbzx4CsW1lbCyynSNpAR4Q"/>
+</div>
+</div>
+</header>
+<main class="pt-20 pb-24 px-4 max-w-[1200px] mx-auto">
+<!-- Welcome Section -->
+<section class="mb-section-gap pt-4">
+<div class="flex flex-col gap-1">
+<p class="font-body-md text-on-surface-variant italic">Namaste, Jay Shreeram</p>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface leading-tight">Begin Your Peaceful Morning</h2>
+</div>
+</section>
+<!-- Daily Darshan - Horizontal Scroll -->
+<section class="mb-section-gap overflow-hidden">
+<div class="flex justify-between items-end mb-4 px-1">
+<h3 class="font-headline-md text-on-surface flex items-center gap-2">
+                    Daily Darshan
+                    <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+</h3>
+<button class="text-primary font-semibold font-label-sm uppercase tracking-wider">See Temple Maps</button>
+</div>
+<div class="flex overflow-x-auto gap-4 no-scrollbar pb-6 -mx-4 px-4 snap-x">
+<!-- Featured Card 1 -->
+<div class="flex-none w-[85%] md:w-[400px] snap-center">
+<div class="relative group h-[220px] rounded-xl overflow-hidden sacred-glow">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A breathtaking, cinematic shot of the Kashi Vishwanath temple during the golden hour of sunrise. The ancient stone architecture is bathed in orange light, with soft mystical mist rising from the Ganges. The scene is majestic, featuring golden finials glowing against a deep blue and saffron sky. Spiritual and serene atmosphere." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAhiOJ4OVwCXbBErzW88ZhQRoKoHaLCu-czcxyhbYazwNloeTs4eJW1n-pLB5atDJKqlEByYAOi9iElnjhm1hSumiqryDgSZ96xAcpSMP99iGZZ72dHZEOyNs1yo0XIq2LZaXMrGSgRy3JSpnt3fFwU-rz0b1XcuaxmziKkngriwDRgiSPAoBUtfiIuN-uxe457FLDa6duMIjtKhCqFj2URCrkYuP6mBt4VaFuAwqOB0cv-j35HaLQxEcFQJFC5Hgumf80Q4Y7C0c0')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-5 w-full">
+<span class="inline-block px-3 py-1 bg-secondary-container text-on-secondary-container font-label-sm rounded-full mb-2">LIVE NOW</span>
+<h4 class="text-white font-headline-md text-xl">Kashi Vishwanath Aarti</h4>
+<p class="text-white/80 font-body-md text-sm">Varanasi • 1.2k Seekers Listening</p>
+</div>
+</div>
+</div>
+<!-- Featured Card 2 -->
+<div class="flex-none w-[85%] md:w-[400px] snap-center">
+<div class="relative group h-[220px] rounded-xl overflow-hidden sacred-glow">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A close-up, high-definition photograph of a marble Tirupati Balaji deity adorned with exquisite gold jewelry and fresh, colorful garlands of roses and jasmine. The lighting is warm and dramatic, highlighting the intricate details of the silken clothes and the divine expression. Deep marigold and royal gold color palette." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAli6BAn9LHjP1MlCckqv0YY0hkJoNRZLQMSkhnZvt0d7P_suY7nmZD7xtFrVU6-gHHjadNclV04hCkM1CLnZR7y_vv0gy6dqDp9RKJvXbB1wflE_CK9c9B-1LwGcLN7gS6G30RHr56ORGNTTh4zYsvX3TlgKyCG5cjwEIKd8U1I4mrtx-3-wDdWEnvela3V1L4KVVH1_fHTUIWMKv2r9tkzA5z0IP7fm5_yDddEh_PABM8Cd4OK-tL3wX9pZzGMenq7rov99ZwQUQ')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-5 w-full">
+<span class="inline-block px-3 py-1 bg-surface-container-high text-on-surface-variant font-label-sm rounded-full mb-2">FEATURED</span>
+<h4 class="text-white font-headline-md text-xl">Tirumala Balaji Darshan</h4>
+<p class="text-white/80 font-body-md text-sm">Tirupati • Morning Suprabhatam</p>
+</div>
+</div>
+</div>
+<!-- Featured Card 3 -->
+<div class="flex-none w-[85%] md:w-[400px] snap-center">
+<div class="relative group h-[220px] rounded-xl overflow-hidden sacred-glow">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="The Golden Temple in Amritsar reflected perfectly in the sacred pool of nectar at dusk. The sky is a gradient of indigo and soft violet, contrasting with the brilliant gold leaf of the temple. The scene is illuminated by countless small oil lamps, creating a shimmering, ethereal effect. Peaceful and meditative mood." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCuzl8Yj4oMGjukjpHNagpPK1Xrvc3U4V2lGuoBTZvd_o0vEqYcyqwgayiLPOWpQaCLRMOq8tTtCp4SinmZ8CqORKQx3BZaX3r8ipNpO7fHLNmp-m8wkSHilVwqbMXWc6H7lDPE16vGS864ShKAAHE31q-L5OJ6aZZTtt2t_YO6pXMAUvVE98rm4tdqnWmJHFf6Zr5SGthTnPEyJLGq0zgNC45ZyElAGsTtU9iwdtC3WiEWlaBm4ltjq43K3kpiHV9I3OtN51iBUR8')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-5 w-full">
+<span class="inline-block px-3 py-1 bg-surface-container-high text-on-surface-variant font-label-sm rounded-full mb-2">PEACEFUL</span>
+<h4 class="text-white font-headline-md text-xl">Harmandir Sahib Path</h4>
+<p class="text-white/80 font-body-md text-sm">Amritsar • Evening Prayers</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Deities Grid -->
+<section class="mb-section-gap">
+<div class="flex items-center gap-4 mb-8">
+<div class="h-px flex-1 bg-gradient-to-r from-transparent to-outline-variant"></div>
+<h3 class="font-headline-md text-on-surface text-center px-4">Divine Deities</h3>
+<div class="h-px flex-1 bg-gradient-to-l from-transparent to-outline-variant"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+<!-- Ganesha -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[4/5] rounded-xl overflow-hidden mb-3 sacred-glow border border-surface-container-high">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A soft, artistically rendered digital painting of Lord Ganesha in a meditative pose. The background features subtle mandalas and glowing particles in shades of cream and saffron. Ganesha's elephant head is detailed with a golden crown and a vermillion bindi. The overall aesthetic is clean, modern, and spiritually uplifting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB92-DY4JZ1RdHwhA0uSy000SNZkLKe-PS6eKbSwq9a66nK3hXHiGa1fu6U1iErH4-3VKfyi1wRU6l_RDxC6ek2Z1KQwqlEyhtZyfEFiwoYzl7KhMdhW7AylcO0rS2F85UjD4YJkjvVw7QIylxwpNHEyLV5aLRVGwTb9HcnxAqP_6wQsl5Fe0IPAvRwD0DRxanIXL7SUXQs87u7W5Bjg0X-iD77KwncXVWBvG0xOWSQgCOF_t2gF4naSrg8Ea8bVa8pOCQJ5zKQYjc"/>
+<div class="absolute inset-0 bg-primary/5 group-hover:bg-transparent transition-colors"></div>
+</div>
+<p class="text-center font-headline-md text-lg text-primary tracking-wide">Ganesha</p>
+<p class="text-center font-label-sm text-on-surface-variant">Remover of Obstacles</p>
+</div>
+<!-- Shiva -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[4/5] rounded-xl overflow-hidden mb-3 sacred-glow border border-surface-container-high">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A powerful and serene illustration of Lord Shiva in meditation amidst the snowy peaks of Mount Kailash. The color palette uses icy blues, crisp whites, and deep ash-grey, with a subtle golden glow emanating from his third eye. A crescent moon sits in his matted hair. High-end, corporate modern spiritual art style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGe5udOyLmpDCuhnkpuj4w9nF1fHxxYTefbYL0f__bsP7LpvZUju1lanSLxKPCeoV0FuLuvWOYcocqwmoJ0AP4AJDno_v6_A3CFxGbFyQ9NVFWJ62evLv2NsTUj5Se2BQF1uLpxe6DANQvFSGDBnYl2X0updc8iSCbohgss6XKOLL4wZrBtkT7GK49ItXUpire5dA01QGO48iak4CLohTyOCpLipBPdu04e7pxtpUD6m8YT-kU7hKmSlW0TcjZoyYg41itC8-p46Q"/>
+<div class="absolute inset-0 bg-primary/5 group-hover:bg-transparent transition-colors"></div>
+</div>
+<p class="text-center font-headline-md text-lg text-primary tracking-wide">Shiva</p>
+<p class="text-center font-label-sm text-on-surface-variant">The Transformer</p>
+</div>
+<!-- Krishna -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[4/5] rounded-xl overflow-hidden mb-3 sacred-glow border border-surface-container-high">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A beautiful portrayal of Lord Krishna playing a golden flute in a lush, enchanted forest. Peacocks with vibrant feathers are in the background. The lighting is ethereal, filtering through canopy leaves in beams of soft yellow and green. Krishna wears a yellow silk pitambara and a peacock feather crown. Serene and joyful vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPCSJ0PfE8X3ZT6_GTF3Kh_oVMsTZN-N3_BJGLv6Rm_N91t_eTWyA3AC-9VBP4bkwTnJbqcRqP3Kgz4oIz7ruYfXqHhOR0eROdntDuROwQZ4pmYHayGjGM_Qjaw8l21Of2fGwWG4f8m4scPF3PuEelzEL7mi58aigQO_Y2Hr87h9QpY-Yt6QpcU6YcTvYEVF_UP2yI2P9v05QQ39NBkvliibcc5SYF86JPghwyN4QXd2xe_oJUUCWaTGA9SVIVNf30c0qpTiq2tMg"/>
+<div class="absolute inset-0 bg-primary/5 group-hover:bg-transparent transition-colors"></div>
+</div>
+<p class="text-center font-headline-md text-lg text-primary tracking-wide">Krishna</p>
+<p class="text-center font-label-sm text-on-surface-variant">The Eternal Guide</p>
+</div>
+<!-- Durga -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[4/5] rounded-xl overflow-hidden mb-3 sacred-glow border border-surface-container-high">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A majestic and fierce representation of Goddess Durga on a tiger. She holds various divine weapons, with a halo of golden light behind her. The background is a rich crimson and deep saffron, conveying power and protection. The art style is refined and detailed, echoing traditional Indian temple sculptures with a modern finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4lHn4j20M0R2iMrqe9IZaXxrk8rKplQDb5vyn9mVUwGQyrdp8VJ5UfAf70CB11aM2G9CKPcvl1m69xdYGV5__zuXZ7L4zO8Q2ZbDlagQsjYRWU0O9IYHUI4wdQPo_GsFovpayiOKFPQysr32eT1l_ifvOncFtJ3er2QcXJnBc7GdQnS18a4BCNR3vFMjtJpo94i-ZHzFA3llGJdivjIFNgvL5iAOdijVUM91oqrk2Dyqsuct5jDdqzhj1a6lsHXktHH8WDJkQKHM"/>
+<div class="absolute inset-0 bg-primary/5 group-hover:bg-transparent transition-colors"></div>
+</div>
+<p class="text-center font-headline-md text-lg text-primary tracking-wide">Durga</p>
+<p class="text-center font-label-sm text-on-surface-variant">Divine Mother</p>
+</div>
+<!-- Hanuman -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[4/5] rounded-xl overflow-hidden mb-3 sacred-glow border border-surface-container-high">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="An inspiring digital portrait of Lord Hanuman in a gesture of humble devotion. He is shown against a sunrise sky of orange and purple. His form is muscular and noble, wearing simple saffron cloth and golden armlets. The light highlights his serene and focused facial expression. Powerful, warm, and protective mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsOYeX7lN3sT3UC679JKBk7vDWaXVI-TVDSopnqbjSIU2bopdA3VFWr6hggWPfQGNDCf9H_fUlnCvogFFod_EoHHtJ_jC4B9cszF0PqVXaXrlxgMnpB2I8XVUK4a1GbVXY2H1P4r1YmjrbFMMWh28iALJjAi1TxqTzgQTWFG9Wks3yIKNHbPd3FIt8-bSWkU8_bxrgSpVZb67VsWxagFRJevv0_FGuHUHKzO7PrCmNvAQ2HXnbm50B7vVJ0KFtL2DzavAqaPVGZt4"/>
+<div class="absolute inset-0 bg-primary/5 group-hover:bg-transparent transition-colors"></div>
+</div>
+<p class="text-center font-headline-md text-lg text-primary tracking-wide">Hanuman</p>
+<p class="text-center font-label-sm text-on-surface-variant">Symbol of Devotion</p>
+</div>
+<!-- Lakshmi -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[4/5] rounded-xl overflow-hidden mb-3 sacred-glow border border-surface-container-high">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A glowing and auspicious image of Goddess Lakshmi seated on a pink lotus flower amidst a tranquil pond. Golden coins fall gently from her hand into a brass vessel. The lighting is soft and luxurious, with a dominant palette of rose pink, creamy white, and brilliant gold. It evokes a feeling of abundance, grace, and prosperity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-_Qz0T0_72KSMnwYIt9hHDCcLfuP5XR5X8D2aWTLgCCxIMfpAVauVT3qMwnD1Rzj-zNwzbPtM63TYbCbAB9ZuDTIrULuGO9CNECWfOjlAlKXM0muOtpl4OkqWhRpQ6Mb7L369_5Gsk70Pq3u2gmpsNBsABYQ9hqNhMpl1lka46BVOZoEeVubZrwuMWbeQPkp0iODZzcqRMr7Vo7Q7vAhu8m02qW5plCCWFWMGa5z2O-gHN2CXNEw64JwHo7XgF8wpOThc35DckT4"/>
+<div class="absolute inset-0 bg-primary/5 group-hover:bg-transparent transition-colors"></div>
+</div>
+<p class="text-center font-headline-md text-lg text-primary tracking-wide">Lakshmi</p>
+<p class="text-center font-label-sm text-on-surface-variant">Bringer of Prosperity</p>
+</div>
+</div>
+</section>
+<!-- Floating Action Button Contextual Check (Home needs primary action) -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-40 group">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<span class="absolute right-16 bg-on-surface text-surface px-3 py-1 rounded text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Quick Aarti</span>
+</button>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full flex justify-around items-center px-4 py-3 pb-safe z-50 bg-surface-container-low/95 backdrop-blur-lg shadow-[0_-8px_30px_rgba(143,78,0,0.08)] rounded-t-xl">
+<!-- Home Tab (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-full px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<!-- Aarti Tab -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:text-primary transition-colors active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">temple_hindu</span>
+<span class="font-label-sm text-label-sm">Aarti</span>
+</a>
+<!-- Gallery Tab -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:text-primary transition-colors active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">wallpaper</span>
+<span class="font-label-sm text-label-sm">Gallery</span>
+</a>
+<!-- Profile Tab -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:text-primary transition-colors active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for deity cards
+        document.querySelectorAll('.group.cursor-pointer').forEach(card => {
+            card.addEventListener('click', () => {
+                const deity = card.querySelector('p').innerText;
+                console.log(`Navigating to ${deity} Aarti playlist...`);
+                // Add a ripple or feedback here if needed
+            });
+        });
+
+        // Simple scroll reveal for the grid items
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in', 'fade-in', 'slide-in-from-bottom-4', 'duration-700');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.group.cursor-pointer').forEach(el => observer.observe(el));
+    </script>
+</body></html>
