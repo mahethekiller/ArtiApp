@@ -7,6 +7,7 @@ import { AudioControlPanel } from '../components/organisms/AudioControlPanel';
 import { LyricsScroller } from '../components/organisms/LyricsScroller';
 import { useAudioPlayer } from '../hooks/useAudioPlayer';
 import { AARTIS, DEITIES, Aarti } from '../data/mockData';
+import { apiService } from '../services/api';
 import { Ionicons } from '@expo/vector-icons';
 import YoutubePlayer from 'react-native-youtube-iframe';
 
@@ -46,28 +47,38 @@ export const PlayerScreen: React.FC<PlayerScreenProps> = ({ navigation, route })
 
   // Load Aarti details
   useEffect(() => {
-    const selectedAarti = AARTIS.find(a => a.id === aartiId);
-    if (selectedAarti) {
-      setAarti(selectedAarti);
-      setLoading(false);
-      
-      // Load into audio player hook
-      const isVideo = initialMode === 'video';
-      if (isVideo && isAudioMode) {
-        toggleAudioVideoMode();
-      } else if (!isVideo && !isAudioMode) {
-        toggleAudioVideoMode();
-      }
+    let active = true;
+    setLoading(true);
 
-      // Load aarti but do not auto-play if we are starting in video mode
-      // Only call loadAarti if this is a different song to avoid interrupting/restarting active music
-      if (currentAarti?.id !== selectedAarti.id) {
-        loadAarti(selectedAarti, !isVideo);
-      }
-    } else {
-      Alert.alert('Error', 'Aarti not found');
-      navigation.goBack();
-    }
+    apiService.getAartiDetails(aartiId)
+      .then(selectedAarti => {
+        if (!active) return;
+        setAarti(selectedAarti);
+        setLoading(false);
+        
+        // Load into audio player hook
+        const isVideo = initialMode === 'video';
+        if (isVideo && isAudioMode) {
+          toggleAudioVideoMode();
+        } else if (!isVideo && !isAudioMode) {
+          toggleAudioVideoMode();
+        }
+
+        // Only call loadAarti if this is a different song to avoid interrupting/restarting active music
+        if (currentAarti?.id !== selectedAarti.id) {
+          loadAarti(selectedAarti, !isVideo);
+        }
+      })
+      .catch(err => {
+        if (!active) return;
+        console.error('Failed to load Aarti details from API:', err);
+        Alert.alert('Error', 'Failed to load Aarti details.');
+        navigation.goBack();
+      });
+
+    return () => {
+      active = false;
+    };
   }, [aartiId]);
 
   // Handle YouTube position polling to keep lyrics scrolling

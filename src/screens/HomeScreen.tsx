@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Image, Pressable, Dimensions, ActivityIndicator, Modal } from 'react-native';
+import { View, StyleSheet, ScrollView, Image, Pressable, Dimensions, ActivityIndicator, Modal, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme } from '../theme';
 import { AppText } from '../components/atoms/Text';
@@ -32,11 +32,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     navigation.navigate('Aarti', { deityId });
   };
 
-  const handleLiveAartiPress = () => {
-    // Find Shree Ganesha Aarti to play as placeholder
-    const ganeshaAarti = AARTIS.find(a => a.id === 'aarti_ganesha');
-    if (ganeshaAarti) {
-      navigation.navigate('AartiPlayer', { aartiId: ganeshaAarti.id });
+  const handleLiveAartiPress = async () => {
+    setLoading(true);
+    try {
+      const aartisList = await apiService.getAartis();
+      if (aartisList.length > 0) {
+        navigation.navigate('AartiPlayer', { aartiId: aartisList[0].id });
+      } else {
+        Alert.alert('No Aartis', 'No Aartis found in the database. Please verify your seeders.');
+      }
+    } catch (err) {
+      console.log('Failed to fetch live aartis:', err);
+      Alert.alert('Error', 'Failed to fetch Aartis from server.');
+    } finally {
+      setLoading(false);
     }
   };
 
