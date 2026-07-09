@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CONFIG } from '../config';
 import { AARTIS, DEITIES, WALLPAPERS, INITIAL_REMINDERS, Aarti, Deity, Wallpaper, Reminder } from '../data/mockData';
 
@@ -17,6 +18,92 @@ let mockProfile = {
   streakCount: 3,
   lastPrayerDate: new Date().toISOString().split('T')[0],
 };
+
+// --- AUTHENTICATION FLOW (SANCTUM SEAMLESS INTEGRATION) ---
+
+let authToken: string | null = null;
+let authPromise: Promise<string | null> | null = null;
+
+async function performAuth(): Promise<string | null> {
+  try {
+    // 1. Check if token is already persisted
+    const savedToken = await AsyncStorage.getItem('auth_token');
+    if (savedToken) {
+      authToken = savedToken;
+      return savedToken;
+    }
+
+    // 2. Default credentials for guest account
+    const email = 'guest_user@artiapp.com';
+    const password = 'password123';
+
+    // Try logging in
+    try {
+      const loginRes = await api.post('/login', { email, password });
+      if (loginRes.data && loginRes.data.token) {
+        const token = loginRes.data.token;
+        await AsyncStorage.setItem('auth_token', token);
+        authToken = token;
+        return token;
+      }
+    } catch (err: any) {
+      // If login failed because user doesn't exist, register them
+      if (err.response && (err.response.status === 401 || err.response.status === 404)) {
+        try {
+          const registerRes = await api.post('/register', {
+            email,
+            password,
+            name: 'Seeker of Peace',
+          });
+          if (registerRes.data && registerRes.data.token) {
+            const token = registerRes.data.token;
+            await AsyncStorage.setItem('auth_token', token);
+            authToken = token;
+            return token;
+          }
+        } catch (regErr) {
+          console.warn('Seamless auto-registration failed:', regErr);
+        }
+      } else {
+        console.warn('Seamless auto-login connection error:', err);
+      }
+    }
+  } catch (storageErr) {
+    console.warn('AsyncStorage access error:', storageErr);
+  }
+  return null;
+}
+
+function ensureAuthenticated(): Promise<string | null> {
+  if (authToken) {
+    return Promise.resolve(authToken);
+  }
+  if (!authPromise) {
+    authPromise = performAuth().then((token) => {
+      authPromise = null;
+      return token;
+    });
+  }
+  return authPromise;
+}
+
+// Axios Request Interceptor to append the Sanctum token
+api.interceptors.request.use(
+  async (config) => {
+    // Skip to prevent infinite loop recursion on login/register calls
+    if (config.url === '/login' || config.url === '/register') {
+      return config;
+    }
+    const token = await ensureAuthenticated();
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 // --- MAPPING UTILITIES ---
 
