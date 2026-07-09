@@ -18,12 +18,62 @@ let mockProfile = {
   lastPrayerDate: new Date().toISOString().split('T')[0],
 };
 
+function mapApiDeityToDeity(apiDeity: any): Deity {
+  return {
+    id: String(apiDeity.id),
+    name: apiDeity.name,
+    description: apiDeity.description,
+    image: apiDeity.image_url || apiDeity.image || 'https://images.unsplash.com/photo-1566378246598-5b11a0d486cc?w=400',
+  };
+}
+
+function mapApiAartiToAarti(apiAarti: any): Aarti {
+  // Extract YouTube Video ID from full URL if needed
+  let videoId = apiAarti.video_url || apiAarti.videoId || '';
+  if (videoId.includes('youtube.com') || videoId.includes('youtu.be')) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = videoId.match(regExp);
+    if (match && match[2].length === 11) {
+      videoId = match[2];
+    }
+  }
+
+  // Parse duration to seconds (e.g. "03:15" -> 195 seconds)
+  let durationSeconds = 0;
+  if (apiAarti.duration) {
+    const parts = apiAarti.duration.split(':');
+    if (parts.length === 2) {
+      durationSeconds = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+    }
+  }
+
+  // Map lyrics key: 'timestamp' -> 'time'
+  const lyrics = (apiAarti.lyrics || []).map((l: any) => ({
+    time: l.timestamp !== undefined ? l.timestamp : (l.time !== undefined ? l.time : 0),
+    text: l.text || '',
+  }));
+
+  return {
+    id: String(apiAarti.id),
+    deityId: String(apiAarti.deity_id || apiAarti.deityId),
+    title: apiAarti.title,
+    subtitle: apiAarti.subtitle,
+    category: apiAarti.category,
+    duration: apiAarti.duration,
+    durationSeconds: durationSeconds || apiAarti.durationSeconds || 180,
+    audioUrl: apiAarti.audio_url || apiAarti.audioUrl,
+    videoId: videoId,
+    lyrics: lyrics,
+  };
+}
+
 export const apiService = {
   async getDeities(): Promise<Deity[]> {
     try {
       const res = await api.get('/deities');
-      return res.data.data;
+      return (res.data.data || []).map(mapApiDeityToDeity);
     } catch (e) {
+      console.warn('API getDeities failed, falling back to mock data. Error:', e);
       if (CONFIG.FALLBACK_TO_MOCK) {
         return [...DEITIES];
       }
@@ -34,8 +84,9 @@ export const apiService = {
   async getAartis(category?: string): Promise<Aarti[]> {
     try {
       const res = await api.get('/aartis', { params: { category } });
-      return res.data.data;
+      return (res.data.data || []).map(mapApiAartiToAarti);
     } catch (e) {
+      console.warn('API getAartis failed, falling back to mock data. Error:', e);
       if (CONFIG.FALLBACK_TO_MOCK) {
         if (category && category !== 'Popular') {
           return AARTIS.filter(a => a.category === category);
@@ -49,8 +100,9 @@ export const apiService = {
   async getAartiDetails(id: string): Promise<Aarti> {
     try {
       const res = await api.get(`/aartis/${id}`);
-      return res.data.data;
+      return mapApiAartiToAarti(res.data.data);
     } catch (e) {
+      console.warn(`API getAartiDetails for ID ${id} failed, falling back to mock data. Error:`, e);
       if (CONFIG.FALLBACK_TO_MOCK) {
         const aarti = AARTIS.find(a => a.id === id);
         if (aarti) return aarti;

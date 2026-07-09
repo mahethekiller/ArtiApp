@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Image, Pressable, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme } from '../theme';
 import { AppText } from '../components/atoms/Text';
-import { DEITIES, AARTIS } from '../data/mockData';
+import { DEITIES, AARTIS, Deity } from '../data/mockData';
+import { apiService } from '../services/api';
 import { Ionicons } from '@expo/vector-icons';
 
 export interface HomeScreenProps {
@@ -11,6 +12,16 @@ export interface HomeScreenProps {
 }
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
+  const [deities, setDeities] = useState<readonly Deity[]>(DEITIES);
+
+  useEffect(() => {
+    apiService.getDeities()
+      .then(data => {
+        setDeities(data);
+      })
+      .catch(err => console.log('Error loading home deities:', err));
+  }, []);
+
   const handleDeityPress = (deityId: string) => {
     // Navigate to Aarti tab and pass deity filter parameter
     navigation.navigate('Aarti', { deityId });
@@ -79,7 +90,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         </View>
 
         <View style={styles.deitiesGrid}>
-          {DEITIES.map((deity) => (
+          {deities.map((deity) => (
             <Pressable
               key={deity.id}
               onPress={() => handleDeityPress(deity.id)}
