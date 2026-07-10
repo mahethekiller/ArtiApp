@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Image, Pressable } from 'react-native';
 import { theme } from '../../theme';
-import { Aarti, DEITIES } from '../../data/mockData';
+import { Aarti, DEITIES, Deity } from '../../data/mockData';
 import { AppText } from '../atoms/Text';
 import { AppButton } from '../atoms/Button';
 import { useAudioPlayer } from '../../hooks/useAudioPlayer';
@@ -13,6 +13,7 @@ export interface AartiCardProps {
   readonly onPlayAudio: (aarti: Aarti) => void;
   readonly onPlayVideo: (aarti: Aarti) => void;
   readonly onToggleFavorite: (aartiId: string) => void;
+  readonly deities?: readonly Deity[];
 }
 
 export const AartiCard: React.FC<AartiCardProps> = ({
@@ -21,11 +22,13 @@ export const AartiCard: React.FC<AartiCardProps> = ({
   onPlayAudio,
   onPlayVideo,
   onToggleFavorite,
+  deities,
 }) => {
   const { currentAarti, isPlaying, togglePlay, loadAarti } = useAudioPlayer();
 
   // Find deity image
-  const deity = DEITIES.find(d => d.id === aarti.deityId);
+  const activeDeities = deities || DEITIES;
+  const deity = activeDeities.find(d => d.id === aarti.deityId);
   const imageUri = deity?.image || 'https://images.unsplash.com/photo-1566378246598-5b11a0d486cc?w=400';
 
   const isThisPlaying = currentAarti?.id === aarti.id && isPlaying;

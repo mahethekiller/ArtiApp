@@ -6,7 +6,7 @@ import { AppText } from '../components/atoms/Text';
 import { AudioControlPanel } from '../components/organisms/AudioControlPanel';
 import { LyricsScroller } from '../components/organisms/LyricsScroller';
 import { useAudioPlayer } from '../hooks/useAudioPlayer';
-import { AARTIS, DEITIES, Aarti } from '../data/mockData';
+import { AARTIS, DEITIES, Aarti, Deity } from '../data/mockData';
 import { apiService } from '../services/api';
 import { Ionicons } from '@expo/vector-icons';
 import YoutubePlayer from 'react-native-youtube-iframe';
@@ -20,6 +20,13 @@ export const PlayerScreen: React.FC<PlayerScreenProps> = ({ navigation, route })
   const { aartiId, initialMode } = route.params;
   const [aarti, setAarti] = useState<Aarti | null>(null);
   const [loading, setLoading] = useState(true);
+  const [deities, setDeities] = useState<readonly Deity[]>(DEITIES);
+
+  useEffect(() => {
+    apiService.getDeities()
+      .then(data => setDeities(data))
+      .catch(err => console.log('Error loading deities in PlayerScreen:', err));
+  }, []);
   
   // YouTube player state variables
   const ytPlayerRef = useRef<any>(null);
@@ -160,7 +167,7 @@ export const PlayerScreen: React.FC<PlayerScreenProps> = ({ navigation, route })
   };
 
   // Find deity image
-  const deity = aarti ? DEITIES.find(d => d.id === aarti.deityId) : null;
+  const deity = aarti ? deities.find(d => d.id === aarti.deityId) : null;
   const imageUri = deity?.image || 'https://images.unsplash.com/photo-1566378246598-5b11a0d486cc?w=400';
 
   if (loading || !aarti) {

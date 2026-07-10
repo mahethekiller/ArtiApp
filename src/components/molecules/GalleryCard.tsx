@@ -1,74 +1,47 @@
 import React from 'react';
-import { View, StyleSheet, Image, Pressable, Share } from 'react-native';
+import { View, StyleSheet, Image, Pressable } from 'react-native';
 import { theme } from '../../theme';
 import { Wallpaper } from '../../data/mockData';
 import { AppText } from '../atoms/Text';
-import { Ionicons } from '@expo/vector-icons';
 
 export interface GalleryCardProps {
   readonly wallpaper: Wallpaper;
-  readonly isSaved: boolean;
-  readonly onSaveToggle: (id: string) => void;
-  readonly onShare: (wallpaper: Wallpaper) => void;
+  readonly onPress: () => void;
 }
 
 export const GalleryCard: React.FC<GalleryCardProps> = ({
   wallpaper,
-  isSaved,
-  onSaveToggle,
-  onShare,
+  onPress,
 }) => {
   return (
-    <View style={styles.card}>
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [styles.card, pressed && styles.pressed]}
+    >
       <Image source={{ uri: wallpaper.imageUrl }} style={styles.image} resizeMode="cover" />
-      
       <View style={styles.overlay}>
-        <View style={styles.topRow}>
-          <AppText variant="bodyMd" color="#ffffff" style={styles.title} numberOfLines={1}>
-            {wallpaper.title}
-          </AppText>
-        </View>
-
-        <View style={styles.bottomRow}>
-          <Pressable
-            onPress={() => onSaveToggle(wallpaper.id)}
-            style={({ pressed }) => [styles.actionButton, pressed && styles.pressed]}
-            accessibilityRole="button"
-            accessibilityLabel={isSaved ? "Remove wallpaper" : "Save wallpaper"}
-          >
-            <Ionicons
-              name={isSaved ? 'bookmark' : 'bookmark-outline'}
-              size={20}
-              color={isSaved ? theme.colors.secondaryContainer : '#ffffff'}
-            />
-          </Pressable>
-
-          <Pressable
-            onPress={() => onShare(wallpaper)}
-            style={({ pressed }) => [styles.actionButton, pressed && styles.pressed]}
-            accessibilityRole="button"
-            accessibilityLabel="Share wallpaper"
-          >
-            <Ionicons name="share-social-outline" size={20} color="#ffffff" />
-          </Pressable>
-        </View>
+        <AppText variant="labelSm" color="#ffffff" style={styles.title} numberOfLines={1}>
+          {wallpaper.title}
+        </AppText>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
+    width: '48.5%', // Slightly less than half to fit space-between gap
     backgroundColor: theme.colors.surfaceDim,
-    borderRadius: theme.borderRadius.lg,
+    borderRadius: theme.borderRadius.md,
     overflow: 'hidden',
-    height: 380, // Fixed height matching high-res aspect ratio
-    marginBottom: theme.spacing.gutter,
-    elevation: 3,
+    height: 180, // Reduced height for 2-column grid
+    elevation: 2,
     shadowColor: theme.colors.glowShadow,
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.15,
-    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    borderWidth: 1,
+    borderColor: theme.colors.surfaceContainer,
   },
   image: {
     width: '100%',
@@ -79,37 +52,17 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    height: 100,
-    backgroundColor: 'rgba(27, 28, 23, 0.65)', // Sleek dark overlay
-    paddingHorizontal: theme.spacing.gutter,
-    paddingVertical: theme.spacing.base,
-    justifyContent: 'space-between',
-  },
-  topRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    backgroundColor: 'rgba(27, 28, 23, 0.6)', // soft dark overlay
+    paddingHorizontal: 8,
+    paddingVertical: 6,
   },
   title: {
     fontWeight: theme.typography.weights.semibold,
-    flex: 1,
-  },
-  bottomRow: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    gap: theme.spacing.gutter,
-    alignItems: 'center',
-    marginBottom: theme.spacing.base,
-  },
-  actionButton: {
-    width: 36,
-    height: 36,
-    borderRadius: theme.borderRadius.full,
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    fontSize: 11,
+    textAlign: 'center',
   },
   pressed: {
-    opacity: 0.7,
-    transform: [{ scale: 0.95 }],
+    opacity: 0.85,
+    transform: [{ scale: 0.98 }],
   },
 });

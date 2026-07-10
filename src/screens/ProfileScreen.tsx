@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Image, Pressable, Switch, TextInput, Alert, Dimensions, Modal, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ScrollView, Image, Pressable, Switch, TextInput, Alert, Dimensions, Modal, ActivityIndicator, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme } from '../theme';
 import { AppText } from '../components/atoms/Text';
@@ -26,8 +26,17 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
     addReminder,
     login,
     register,
-    logout
+    logout,
+    refresh
   } = useProfile();
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await refresh();
+    setRefreshing(false);
+  };
 
   const { savedWallpapers } = useGallery();
   const { currentAarti, isPlaying, togglePlay, loadAarti } = useAudioPlayer();
@@ -41,7 +50,9 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
   // Add reminder modal state
   const [reminderModalVisible, setReminderModalVisible] = useState(false);
   const [newReminderTitle, setNewReminderTitle] = useState('');
-  const [newReminderTime, setNewReminderTime] = useState('07:00 AM');
+  const [reminderHour, setReminderHour] = useState(7);
+  const [reminderMinute, setReminderMinute] = useState(0);
+  const [reminderPeriod, setReminderPeriod] = useState<'AM' | 'PM'>('AM');
 
   // Authentication (login/register) modal state
   const [authModalVisible, setAuthModalVisible] = useState(false);
@@ -80,10 +91,14 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
       Alert.alert('Error', 'Reminder name cannot be empty.');
       return;
     }
-    const success = await addReminder(newReminderTitle, newReminderTime);
+    const formattedTime = `${reminderHour.toString().padStart(2, '0')}:${reminderMinute.toString().padStart(2, '0')} ${reminderPeriod}`;
+    const success = await addReminder(newReminderTitle, formattedTime);
     if (success) {
       setReminderModalVisible(false);
       setNewReminderTitle('');
+      setReminderHour(7);
+      setReminderMinute(0);
+      setReminderPeriod('AM');
       Alert.alert('Success', 'Reminder set successfully.');
     }
   };
@@ -148,7 +163,18 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['bottom']}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={[theme.colors.primary]}
+            tintColor={theme.colors.primary}
+          />
+        }
+      >
         {/* Profile Card Header */}
         <View style={styles.profileHeaderCard}>
           <View style={styles.avatarWrapper}>
@@ -553,13 +579,61 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
               style={styles.modalInput}
             />
 
-            <TextInput
-              placeholder="Time (e.g. 06:30 PM)"
-              placeholderTextColor={theme.colors.outline}
-              value={newReminderTime}
-              onChangeText={setNewReminderTime}
-              style={styles.modalInput}
-            />
+            <AppText variant="bodyMd" color={theme.colors.primary} style={{ fontWeight: theme.typography.weights.semibold, marginBottom: -4, marginTop: 4 }}>
+              Reminder Time
+            </AppText>
+            
+            <View style={styles.timePickerContainer}>
+              {/* Hour Selector */}
+              <View style={styles.timeColumn}>
+                <Pressable onPress={() => setReminderHour(h => h === 12 ? 1 : h + 1)} style={styles.arrowBtn}>
+                  <Ionicons name="chevron-up" size={22} color={theme.colors.primary} />
+                </Pressable>
+                <View style={styles.timeValueBox}>
+                  <AppText variant="bodyLg" style={styles.timeValue}>
+                    {reminderHour.toString().padStart(2, '0')}
+                  </AppText>
+                </View>
+                <Pressable onPress={() => setReminderHour(h => h === 1 ? 12 : h - 1)} style={styles.arrowBtn}>
+                  <Ionicons name="chevron-down" size={22} color={theme.colors.primary} />
+                </Pressable>
+                <AppText variant="labelSm" color={theme.colors.outline} style={styles.columnLabel}>Hour</AppText>
+              </View>
+
+              <AppText variant="headlineMd" style={styles.timeColon}>:</AppText>
+
+              {/* Minute Selector */}
+              <View style={styles.timeColumn}>
+                <Pressable onPress={() => setReminderMinute(m => m === 59 ? 0 : m + 1)} style={styles.arrowBtn}>
+                  <Ionicons name="chevron-up" size={22} color={theme.colors.primary} />
+                </Pressable>
+                <View style={styles.timeValueBox}>
+                  <AppText variant="bodyLg" style={styles.timeValue}>
+                    {reminderMinute.toString().padStart(2, '0')}
+                  </AppText>
+                </View>
+                <Pressable onPress={() => setReminderMinute(m => m === 0 ? 59 : m - 1)} style={styles.arrowBtn}>
+                  <Ionicons name="chevron-down" size={22} color={theme.colors.primary} />
+                </Pressable>
+                <AppText variant="labelSm" color={theme.colors.outline} style={styles.columnLabel}>Min</AppText>
+              </View>
+
+              {/* Period Selector (AM/PM) */}
+              <View style={[styles.timeColumn, { marginLeft: 12 }]}>
+                <Pressable onPress={() => setReminderPeriod(p => p === 'AM' ? 'PM' : 'AM')} style={styles.arrowBtn}>
+                  <Ionicons name="chevron-up" size={22} color={theme.colors.primary} />
+                </Pressable>
+                <View style={styles.timeValueBox}>
+                  <AppText variant="bodyLg" style={[styles.timeValue, { fontSize: 20 }]}>
+                    {reminderPeriod}
+                  </AppText>
+                </View>
+                <Pressable onPress={() => setReminderPeriod(p => p === 'AM' ? 'PM' : 'AM')} style={styles.arrowBtn}>
+                  <Ionicons name="chevron-down" size={22} color={theme.colors.primary} />
+                </Pressable>
+                <AppText variant="labelSm" color={theme.colors.outline} style={styles.columnLabel}>Period</AppText>
+              </View>
+            </View>
 
             <View style={styles.modalActions}>
               <AppButton
@@ -846,6 +920,54 @@ const styles = StyleSheet.create({
   },
   modalBtn: {
     flex: 1,
+  },
+  timePickerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.surfaceContainerLow,
+    borderRadius: theme.borderRadius.md,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    borderWidth: 1,
+    borderColor: theme.colors.surfaceContainer,
+  },
+  timeColumn: {
+    alignItems: 'center',
+    width: 60,
+  },
+  arrowBtn: {
+    padding: 2,
+  },
+  timeValueBox: {
+    backgroundColor: theme.colors.surfaceContainerLowest,
+    width: 50,
+    height: 44,
+    borderRadius: theme.borderRadius.default,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: theme.colors.outlineVariant,
+    shadowColor: theme.colors.glowShadow,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 1.5,
+    elevation: 1,
+  },
+  timeValue: {
+    fontWeight: theme.typography.weights.bold,
+    color: theme.colors.primary,
+    fontSize: 22,
+  },
+  timeColon: {
+    marginHorizontal: 4,
+    fontWeight: theme.typography.weights.bold,
+    color: theme.colors.primary,
+    paddingBottom: 16,
+  },
+  columnLabel: {
+    marginTop: 4,
+    fontWeight: theme.typography.weights.medium,
   },
   modalLoaderContainer: {
     flex: 1,

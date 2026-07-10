@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { apiService } from '../services/api';
 import { Reminder, Aarti } from '../data/mockData';
+import { notificationService } from '../services/notificationService';
 
 export interface UserProfile {
   name: string;
@@ -31,6 +32,9 @@ export const useProfile = () => {
       ]);
       setProfile(profData);
       setReminders(remsData);
+      
+      // Sync notifications with device
+      await notificationService.syncAllReminders(remsData);
       
       // Filter the actual Aartis list using the user's favorite IDs from the API
       const userFavs = allAartis.filter(a => favIds.includes(a.id));
@@ -79,6 +83,13 @@ export const useProfile = () => {
     try {
       const updated = await apiService.toggleReminder(id, isEnabled);
       setReminders(prev => prev.map(r => r.id === id ? updated : r));
+      
+      // Update device alarms
+      if (isEnabled) {
+        await notificationService.scheduleReminderNotification(updated);
+      } else {
+        await notificationService.cancelReminderNotification(id);
+      }
       return true;
     } catch (e) {
       console.error('Failed to toggle reminder:', e);
@@ -93,6 +104,11 @@ export const useProfile = () => {
     try {
       const newRem = await apiService.addReminder(title, time);
       setReminders(prev => [...prev, newRem]);
+      
+      // Schedule device alarm for the new reminder if enabled
+      if (newRem.isEnabled) {
+        await notificationService.scheduleReminderNotification(newRem);
+      }
       return true;
     } catch (e) {
       console.error('Failed to add reminder:', e);

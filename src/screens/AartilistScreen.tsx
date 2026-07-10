@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, TextInput, Pressable, Image, ActivityIndicator, Platform, Modal } from 'react-native';
+import { View, StyleSheet, FlatList, TextInput, Pressable, Image, ActivityIndicator, Platform, Modal, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme } from '../theme';
 import { AppText } from '../components/atoms/Text';
 import { AartiCard } from '../components/molecules/AartiCard';
 import { useAartis } from '../hooks/useAartis';
-import { DEITIES, Aarti } from '../data/mockData';
+import { DEITIES, Aarti, Deity } from '../data/mockData';
+import { apiService } from '../services/api';
 import { Ionicons } from '@expo/vector-icons';
 
 export interface AartilistScreenProps {
@@ -18,6 +19,14 @@ type FilterCategory = 'Popular' | 'Morning' | 'Evening';
 export const AartilistScreen: React.FC<AartilistScreenProps> = ({ navigation, route }) => {
   const [selectedCategory, setSelectedCategory] = useState<FilterCategory>('Popular');
   const [deityFilter, setDeityFilter] = useState<string | null>(null);
+  const [deities, setDeities] = useState<readonly Deity[]>(DEITIES);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    apiService.getDeities()
+      .then(data => setDeities(data))
+      .catch(err => console.log('Error loading deities in list:', err));
+  }, []);
 
   // Hook handles loading, search query filtering, favorites lists
   const {
@@ -29,7 +38,13 @@ export const AartilistScreen: React.FC<AartilistScreenProps> = ({ navigation, ro
     setSearchQuery,
     toggleFavorite,
     refresh
-  } = useAartis(selectedCategory);
+  } = useAartis(deityFilter ? undefined : selectedCategory);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await refresh();
+    setRefreshing(false);
+  };
 
   // Handle parameter from home screen to filter by Deity
   useEffect(() => {
@@ -55,7 +70,7 @@ export const AartilistScreen: React.FC<AartilistScreenProps> = ({ navigation, ro
     return aartis;
   };
 
-  const activeDeityName = deityFilter ? DEITIES.find(d => d.id === deityFilter)?.name : '';
+  const activeDeityName = deityFilter ? deities.find(d => d.id === deityFilter)?.name : '';
 
   const renderHeader = () => (
     <View style={styles.header}>
@@ -173,12 +188,21 @@ export const AartilistScreen: React.FC<AartilistScreenProps> = ({ navigation, ro
               onPlayAudio={handlePlayAudio}
               onPlayVideo={handlePlayVideo}
               onToggleFavorite={toggleFavorite}
+              deities={deities}
             />
           )}
           keyExtractor={(item) => item.id}
-          ListHeaderComponent={renderHeader}
+          ListHeaderComponent={renderHeader()}
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={[theme.colors.primary]}
+              tintColor={theme.colors.primary}
+            />
+          }
           ListEmptyComponent={
             <View style={styles.emptyContainer}>
               <AppText variant="bodyMd" color={theme.colors.outline}>
